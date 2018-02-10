@@ -82,3 +82,5 @@ Traceback (most recent call last):
     cls, key = identity_key(instance=obj)
 ValueError: too many values to unpack (expected 2)
 2018-02-10 18:23:43,652 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]
+2018-02-10 18:35:31,139 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]
+2018-02-10 18:44:07,030 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]

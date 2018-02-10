@@ -44,7 +44,6 @@ class User(UserMixin, db.Model):
         except:
             return True
 
-
     @staticmethod
     def verify_reset_password_token(token):
         try:
