@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <h1>All Whiskies submitted</h1><br>
+    {% if current_user.is_authenticated %}
+    <p>Can't find a distillery? <a href="{{ url_for('main.add_distillery') }}">Add one here</a></p>
+    {% endif %}
+    <hr>
+    <div class="row">
+        {% for distillery in all_distillery %}
+        <div class="col-md-6">
+            {% include "_distillery.html" %}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

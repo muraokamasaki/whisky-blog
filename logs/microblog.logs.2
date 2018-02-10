@@ -1,0 +1,84 @@
+2018-02-10 18:11:46,792 ERROR: Exception on /admin/tag/new/ [GET] [in /Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/base.py", line 69, in inner
+    return self._run_view(f, *args, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/base.py", line 368, in _run_view
+    return fn(self, *args, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/model/base.py", line 2024, in create_view
+    return_url=return_url)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/base.py", line 308, in render
+    return render_template(template, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/model/create.html", line 3, in top-level template code
+    {% from 'admin/lib.html' import extra with context %} {# backward compatible #}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/master.html", line 1, in top-level template code
+    {% extends admin_base_template %}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 35, in top-level template code
+    {% block page_body %}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 64, in block "page_body"
+    {% block body %}{% endblock %}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/model/create.html", line 22, in block "body"
+    {% block create_form %}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/model/create.html", line 23, in block "create_form"
+    {{ lib.render_form(form, return_url, extra(), form_opts) }}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 579, in _invoke
+    rv = self._func(*arguments)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/lib.html", line 212, in template
+    {% call form_tag(action=action) %}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 579, in _invoke
+    rv = self._func(*arguments)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/lib.html", line 191, in template
+    {{ caller() }}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 579, in _invoke
+    rv = self._func(*arguments)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/lib.html", line 213, in template
+    {{ render_form_fields(form, form_opts=form_opts) }}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 579, in _invoke
+    rv = self._func(*arguments)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/lib.html", line 183, in template
+    {{ render_field(form, f, kwargs) }}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 579, in _invoke
+    rv = self._func(*arguments)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/lib.html", line 137, in template
+    {{ field(**kwargs)|safe }}
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/wtforms/fields/core.py", line 153, in __call__
+    return self.meta.render_field(self, kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/wtforms/meta.py", line 56, in render_field
+    return field.widget(field, **render_kw)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/form/widgets.py", line 28, in __call__
+    return super(Select2Widget, self).__call__(field, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/wtforms/widgets/core.py", line 287, in __call__
+    for val, label, selected in field.iter_choices():
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/contrib/sqla/fields.py", line 168, in iter_choices
+    for pk, obj in self._get_object_list():
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/contrib/sqla/fields.py", line 102, in _get_object_list
+    self._object_list = [(text_type(get_pk(obj)), obj) for obj in query]
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/contrib/sqla/fields.py", line 102, in <listcomp>
+    self._object_list = [(text_type(get_pk(obj)), obj) for obj in query]
+  File "/Users/masaki/whisky/venv/lib/python3.6/site-packages/flask_admin/contrib/sqla/fields.py", line 299, in get_pk_from_identity
+    cls, key = identity_key(instance=obj)
+ValueError: too many values to unpack (expected 2)
+2018-02-10 18:13:13,875 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]

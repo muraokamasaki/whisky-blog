@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>You do not have permission to do that</h1>
+    <p><a href="{{ url_for('main.home') }}">Back</a></p>
+{% endblock %}
