@@ -45,35 +45,16 @@ def edit_profile():
     return render_template('edit_form.html', title='Edit Profile', form=form, profile=True)
 
 
-@bp.route('/whisky/<id>', methods=['GET', 'POST'])
+@bp.route('/whisky/<id>')
 def whisky(id):
     whisky = Whisky.query.filter_by(id=id).first_or_404()
-    form = ReviewForm()
-    t = []
-    for i in range(len(all_tags) // 4 + 1):
-        a = []
-        for j in range(4):
-            try:
-                a.append(all_tags[i * 4 + j][0])
-            except:
-                break
-        t.append(a)
-    if form.validate_on_submit():
-        review = Review(body=form.review.data, author=current_user, whisky=whisky)
-        db.session.add(review)
-        db.session.commit()
-        for tag in list(form.add_tags.data):
-            review.add_tag(Tag.query.filter_by(name=tag).first())
-        db.session.commit()
-        flash('Your review has been submitted')
-        return redirect(url_for('main.whisky', id=whisky.id))
     page = request.args.get('page', 1, type=int)
     reviews = Review.query.filter_by(whisky_id=whisky.id).order_by(Review.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('main.whisky', id=id, page=reviews.next_num) if reviews.has_next else None
     prev_url = url_for('main.whisky', id=id, page=reviews.prev_num) if reviews.has_prev else None
-    return render_template('whisky.html', title=whisky.distillery.name + ' ' + whisky.name, all_tags=t,
-                           whisky=whisky, reviews=reviews.items, form=form, next_url=next_url, prev_url=prev_url)
+    return render_template('whisky.html', title=whisky.distillery.name + ' ' + whisky.name,
+                           whisky=whisky, reviews=reviews.items, next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/delete/<post_id>')
@@ -161,3 +142,30 @@ def edit_whisky(id):
 def whisky_popup(id):
     whisky = Whisky.query.filter_by(id=id).first_or_404()
     return render_template('whisky_popup.html', whisky=whisky)
+
+
+@bp.route('/whisky/<id>/submit', methods=['GET', 'POST'])
+@login_required
+def submit_review(id):
+    whisky = Whisky.query.filter_by(id=id).first_or_404()
+    form = ReviewForm()
+    t = []
+    for i in range(len(all_tags) // 4 + 1):
+        a = []
+        for j in range(4):
+            try:
+                a.append(all_tags[i * 4 + j][0])
+            except:
+                break
+        t.append(a)
+    if form.validate_on_submit():
+        review = Review(nose=form.nose.data, palate=form.palate.data, finish=form.finish.data,
+                        score=form.score.data, author=current_user, whisky=whisky)
+        db.session.add(review)
+        db.session.commit()
+        for tag in list(form.add_tags.data):
+            review.add_tag(Tag.query.filter_by(name=tag).first())
+        db.session.commit()
+        flash('Your review has been submitted')
+        return redirect(url_for('main.whisky', id=whisky.id))
+    return render_template('submit_review.html', form=form, whisky=whisky, all_tags=t)

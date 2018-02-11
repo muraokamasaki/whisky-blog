@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField,\
-    SelectMultipleField
-from wtforms.validators import DataRequired, ValidationError, Length
+    SelectMultipleField, IntegerField
+from wtforms.validators import DataRequired, ValidationError, Length, NumberRange
 from app.models import User, Distillery, Whisky
 
 
@@ -33,7 +33,10 @@ class EditProfileForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
-    review = TextAreaField('Write your review', validators=[DataRequired(), Length(min=0, max=255)])
+    nose = TextAreaField('Nose', validators=[DataRequired(), Length(min=0, max=255)])
+    palate = TextAreaField('Palate', validators=[DataRequired(), Length(min=0, max=255)])
+    finish = TextAreaField('Finish', validators=[DataRequired(), Length(min=0, max=255)])
+    score = IntegerField('Score (out of 100)', validators=[DataRequired(), NumberRange(min=0, max=100)])
     add_tags = SelectMultipleField('Tags', choices=all_tags)
     submit = SubmitField('Submit')
 

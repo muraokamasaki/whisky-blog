@@ -3,30 +3,13 @@
 
 {% block app_content %}
     <h4>All recent reviews</h4><br>
-    {% for review in reviews %}
+    {% if reviews %}
     <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('main.user', username=review.author.username) }}">
-                    <img src="{{ review.author.avatar(70) }}" />
-                </a>
-            </td>
-            <td width="256px">
-                <a href="{{ url_for('main.whisky', id=review.whisky.id) }}">
-                    {{ review.whisky.distillery.name }} {{review.whisky.name }}
-                </a>
-            </td>
-            <td>
-                <a href="{{ url_for('main.user', username=review.author.username) }}">
-                    {{ review.author.username }}
-                </a>
-                says:
-                <br>
-                {{ review.body }}
-            </td>
-        </tr>
+        {% for review in reviews %}
+            {% include "_post.html" %}
+        {% endfor %}
     </table>
-    {% endfor %}
+    {% endif %}
     <nav aria-label="...">
         <ul class="pager">
             <li class="previous{% if not prev_url %} disabled{% endif %}">

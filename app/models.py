@@ -60,7 +60,10 @@ def load_user(id):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(255))
+    nose = db.Column(db.String(255))
+    palate = db.Column(db.String(255))
+    finish = db.Column(db.String(255))
+    score = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     whisky_id = db.Column(db.Integer, db.ForeignKey('whisky.id'))
@@ -68,7 +71,7 @@ class Review(db.Model):
                            backref=db.backref('reviews', lazy='dynamic'))
 
     def __repr__(self):
-        return '<Review {}>'.format(self.body)
+        return '<Review {}>'.format(self.id)
 
     def add_tag(self, tag):
         if not self.is_tagged(tag):

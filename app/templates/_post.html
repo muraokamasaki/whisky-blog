@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<table class="table table-hover">
-    <tr>
-        <td width="70px">
-            <a href="{{ url_for('main.user', username=review.author.username) }}">
-                <img src="{{ review.author.avatar(70) }}" />
-            </a>
-        </td>
-        <td>
+<tr>
+    <td width="70px">
+        <a href="{{ url_for('main.user', username=review.author.username) }}">
+            <img src="{{ review.author.avatar(70) }}" />
+        </a>
+    </td>
+    <td width="60px;">
+        <big><span class="label label-success">{{ review.score }}</span></big>
+    </td>
+    <td width="735px;">
+        <span class="text-left">
             <a href="{{ url_for('main.user', username=review.author.username) }}">
                 {{ review.author.username }}
             </a>
-            said {{ moment(review.timestamp).fromNow() }}:
-            <br>
-            {{ review.body }}
-            {% for tag in review.tags %}
-            <badge class="badge">{{ tag.name }}</badge>
-            {% endfor %}
-        </td>
+            said {{ moment(review.timestamp).fromNow() }}
+            {% if title == "Explore" %}
+            about
+            <a href="{{ url_for('main.whisky', id=review.whisky_id) }}">{{ review.whisky.distillery.name }} {{ review.whisky.name }}</a>
+            {% endif %}
+            :</span>
+        <hr id="post">
+        <p><span class="text-info">Nose</span><br>{{ review.nose }}</p>
+        <p><span class="text-info">Palate</span><br>{{ review.palate }}</p>
+        <p><span class="text-info">Finish</span><br>{{ review.finish }}</p>
+    </td>
+    <td style="width: 180px; padding-top: 20px;">
+        {% for tag in review.tags %}
+        <badge class="badge">{{ tag.name }}</badge>
+        {% endfor %}
+    </td>
         {% if review.author == current_user %}
-        <td>
-            <a href="{{ url_for('main.delete_post', post_id=review.id) }}">
-                Delete
-            </a>
-        </td>
-        {% endif %}
-    </tr>
-</table>
+    <td style="padding-top: 102px; padding-bottom: 102px;">
+        <a href="{{ url_for('main.delete_post', post_id=review.id) }}" class="btn btn-danger">
+            Delete
+        </a>
+    </td>
+    {% endif %}
+</tr>
