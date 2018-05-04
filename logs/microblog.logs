@@ -90,3 +90,4 @@ werkzeug.routing.BuildError: Could not build url for endpoint 'whisky' with valu
 2018-02-11 19:54:10,264 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]
 2018-02-11 19:54:57,888 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]
 2018-02-11 19:57:47,608 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]
+2018-04-12 15:16:05,475 INFO: Microblog startup [in /Users/masaki/whisky/app/__init__.py:75]
