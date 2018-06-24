@@ -25,6 +25,7 @@
                     <li><a href="{{ url_for('main.home') }}">Home</a></li>
                     <li><a href="{{ url_for('main.explore') }}">Explore</a></li>
                     <li><a href="{{ url_for('main.whisky_list') }}">All Whiskies</a></li>
+                    <li><a href="{{ url_for('main.recipe_page') }}">Recipes</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
