@@ -169,3 +169,9 @@ def submit_review(id):
         flash('Your review has been submitted')
         return redirect(url_for('main.whisky', id=whisky.id))
     return render_template('submit_review.html', form=form, whisky=whisky, all_tags=t)
+
+
+@bp.route('/recipes')
+@login_required
+def recipe_page():
+    return render_template('recipe_page.html')
