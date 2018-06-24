@@ -94,7 +94,7 @@ def register_admins(app):
     class UserView(BaseModelView):
         column_exclude_list = ['password_hash']
         can_create = False
-        can_edit = False
+        can_edit = True
 
     class ReviewView(BaseModelView):
         can_create = False
