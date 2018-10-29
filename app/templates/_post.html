@@ -12,16 +12,16 @@
             <a href="{{ url_for('main.user', username=review.author.username) }}">
                 {{ review.author.username }}
             </a>
-            said {{ moment(review.timestamp).fromNow() }}
+            {{ _('said') }} {{ moment(review.timestamp).fromNow() }}
             {% if title == "Explore" %}
-            about
+            {{ _('about') }}
             <a href="{{ url_for('main.whisky', id=review.whisky_id) }}">{{ review.whisky.distillery.name }} {{ review.whisky.name }}</a>
             {% endif %}
             :</span>
         <hr id="post">
-        <p><span class="text-info">Nose</span><br>{{ review.nose }}</p>
-        <p><span class="text-info">Palate</span><br>{{ review.palate }}</p>
-        <p><span class="text-info">Finish</span><br>{{ review.finish }}</p>
+        <p><span class="text-info">{{ _('Nose') }}</span><br>{{ review.nose }}</p>
+        <p><span class="text-info">{{ _('Palate') }}</span><br>{{ review.palate }}</p>
+        <p><span class="text-info">{{ _('Finish') }}</span><br>{{ review.finish }}</p>
     </td>
     <td style="width: 180px; padding-top: 20px;">
         {% for tag in review.tags %}
@@ -31,7 +31,7 @@
         {% if review.author == current_user %}
     <td style="padding-top: 102px; padding-bottom: 102px;">
         <a href="{{ url_for('main.delete_post', post_id=review.id) }}" class="btn btn-danger">
-            Delete
+            {{ _('Delete') }}
         </a>
     </td>
     {% endif %}

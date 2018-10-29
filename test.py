@@ -34,8 +34,8 @@ class UserModelCase(unittest.TestCase):
 
     def test_tag(self):
         user = User(username='john', email='john@example.com')
-        review1 = Review(body='Review 1', author=user)
-        review2 = Review(body='Review 2', author=user)
+        review1 = Review(nose='Review 1', author=user)
+        review2 = Review(nose='Review 2', author=user)
         tag1 = Tag(name='sweet')
         tag2 = Tag(name='sour')
         tag3 = Tag(name='salty')

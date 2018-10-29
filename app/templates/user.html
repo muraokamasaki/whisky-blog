@@ -8,7 +8,7 @@
             <td style="padding-left: 15px;">
                 <h1>{{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user == current_user %}<p><a href="{{ url_for('main.edit_profile') }}">Edit Profile</a></p>{% endif %}
+                {% if user == current_user %}<p><a href="{{ url_for('main.edit_profile') }}">{{ _('Edit Profile') }}</a></p>{% endif %}
             </td>
         </tr>
     </table>

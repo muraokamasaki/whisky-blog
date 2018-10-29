@@ -3,7 +3,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-    <h1>Edit Whisky</h1>
+    <h1>{{ _('Edit Whisky') }}</h1>
     <h3>{{ whisky.distillery.name }} {{ whisky.name }}</h3>
     <hr>
     <div class="row">
@@ -21,7 +21,7 @@
                         <table class="table" style="margin-top:-9px;">
                             <thead>
                                 <tr>
-                                    <th>Tags</th>
+                                    <th>{{ _('Tags') }}</th>
                                 </tr>
                             </thead>
                             {% for row in all_tags %}

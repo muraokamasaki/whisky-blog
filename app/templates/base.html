@@ -22,17 +22,22 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.home') }}">Home</a></li>
-                    <li><a href="{{ url_for('main.explore') }}">Explore</a></li>
-                    <li><a href="{{ url_for('main.whisky_list') }}">All Whiskies</a></li>
-                    <li><a href="{{ url_for('main.recipe_page') }}">Recipes</a></li>
+                    <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+                    <li><a href="{{ url_for('main.explore') }}">{{ _('Explore') }}</a></li>
+                    <li><a href="{{ url_for('main.whisky_list') }}">{{ _('All Whiskies') }}</a></li>
+                    <li><a href="{{ url_for('main.recipe_page') }}">{{ _('Recipes') }}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {% if CURRENT_LANGUAGE == 'en' %}
+                    <li><a href="{{ url_for('main.set_language', language='ja') }}">JA</a></li>
+                    {% elif CURRENT_LANGUAGE == 'ja' %}
+                    <li><a href="{{ url_for('main.set_language', language='en') }}">EN</a></li>
+                    {% endif %}
                     {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('main.user', username=current_user.username) }}">{{ _('Profile') }}</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -58,6 +63,7 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
+    {{ moment.lang(g.locale) }}
     <script>
         $ (function() {
             var timer = null;

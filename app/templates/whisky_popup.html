@@ -5,16 +5,16 @@
             <small>
             <p>
                 {% if whisky.number_reviews() == 1 %}
-                There is {{ whisky.number_reviews() }} review.
+                {{ _('There is %(num)s review.', num = whisky.number_reviews()) }}
                 {% elif whisky.number_reviews() == 0 %}
                 There are no reviews.
                 {% else %}
-                There are {{ whisky.number_reviews() }} reviews.
+                {{ _('There are %(num)s reviews.', num = whisky.number_reviews()) }}
                 {% endif %}
             </p>
             {% if current_user.not_commented(whisky.id) %}
                 <hr id="whisky_popup">
-                <p>You have not reviewed this yet!</p>
+                <p>{{ _('You have not reviewed this yet!') }}</p>
             {% endif %}
             </small>
         </td>

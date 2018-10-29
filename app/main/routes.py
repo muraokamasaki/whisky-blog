@@ -1,10 +1,23 @@
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, g, current_app, session
 from flask_login import current_user, login_required
-from app import db, current_app
+from flask_babel import get_locale, refresh
+from app import db
 from app.models import User, Review, Whisky, Distillery, Tag
 from app.main import bp
 from app.main.forms import EditProfileForm, ReviewForm, AddWhiskyForm, AddDistilleryForm, EditWhiskyForm, \
     EditDistilleryForm, all_tags
+
+
+@bp.before_app_request
+def before_request():
+    g.locale = str(get_locale())
+
+
+# context processor injects the dict into the template (used in base.html)
+@bp.context_processor
+def inject_conf_var():
+    return dict(CURRENT_LANGUAGE=session.get('language',
+                                             request.accept_languages.best_match(current_app.config['LANGUAGES'])))
 
 
 @bp.route('/')
@@ -175,3 +188,9 @@ def submit_review(id):
 @login_required
 def recipe_page():
     return render_template('recipe_page.html')
+
+
+@bp.route('/language/<language>')
+def set_language(language=None):
+    session['language'] = language
+    return redirect(url_for('main.home'))

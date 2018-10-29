@@ -5,11 +5,11 @@
 {% block app_content %}
 
     {% if distillery %}
-    <h1>Edit Distillery {{ distillery.name }}</h1>
+    <h1>{{ _('Edit Distillery') }} {{ distillery.name }}</h1>
     {% elif whisky %}
-    <h1>Edit Whisky {{ whisky.distillery.name }} {{ whisky.name }}</h1>
+    <h1>{{ _('Edit Whisky') }} {{ whisky.distillery.name }} {{ whisky.name }}</h1>
     {% elif profile %}
-    <h1>Edit Profile</h1>
+    <h1>{{ _('Edit Profile') }}</h1>
     {% endif %}
 
     <div class="row">

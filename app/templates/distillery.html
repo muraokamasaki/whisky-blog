@@ -5,7 +5,7 @@
 {% block app_content %}
 <h1>{{ distillery.name }} <span class="badge">{{ distillery.location }}</span></h1>
 {% if current_user.is_authenticated %}
-<p><a href="{{ url_for('main.edit_distillery', id=distillery.id) }}">Edit Distillery Info</a></p>
+<p><a href="{{ url_for('main.edit_distillery', id=distillery.id) }}">{{ _('Edit Distillery Info') }}</a></p>
     <br>
     <div class="row">
         <div class="col-md-6">
