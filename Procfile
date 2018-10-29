@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn whisky:app
+web: flask db upgrade; flask translate compile; gunicorn whisky:app
