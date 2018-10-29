@@ -32,6 +32,9 @@
                     <li><a href="{{ url_for('main.set_language', language='ja') }}">JA</a></li>
                     {% elif CURRENT_LANGUAGE == 'ja' %}
                     <li><a href="{{ url_for('main.set_language', language='en') }}">EN</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('main.set_language', language='ja') }}">JA</a></li>
+                    <li><a href="{{ url_for('main.set_language', language='en') }}">EN</a></li>
                     {% endif %}
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>
