@@ -5,8 +5,10 @@
 {% block app_content %}
     <h1>{{ whisky.distillery.name }} {{ whisky.name }} <span class="badge">{{ whisky.distillery.location }}</span></h1>
     {% if whisky.about %}<p>{{ whisky.about }}</p>{% endif %}
+    <button class="btn btn-default">Tried it?</button>
     {% if current_user.is_authenticated %}
-    <p><a href="{{ url_for('main.edit_whisky', id=whisky.id) }}">{{ _('Edit Whisky Info') }}</a></p>
+    <p><a class="btn btn-default" href="{{ url_for('main.edit_whisky', id=whisky.id) }}"
+          role="button">{{ _('Edit Whisky Info') }}</a></p>
     <p><a href="{{ url_for('main.submit_review', id=whisky.id) }}">{{ _('Submit a review') }}</a></p>
     {% endif %}
     <hr>

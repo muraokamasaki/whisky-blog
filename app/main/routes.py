@@ -39,7 +39,8 @@ def explore():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', user=user)
+    all_whisky = [x for x in Whisky.query.order_by(Whisky.name.asc()).all() if not user.not_commented(x.id)]
+    return render_template('user.html', user=user, all_whisky=all_whisky)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])

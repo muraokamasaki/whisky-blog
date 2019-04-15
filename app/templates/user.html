@@ -11,5 +11,23 @@
                 {% if user == current_user %}<p><a href="{{ url_for('main.edit_profile') }}">{{ _('Edit Profile') }}</a></p>{% endif %}
             </td>
         </tr>
+        <tr>
+            <td width="200px">
+                <span class="glyphicon glyphicon-star"></span> Whiskies tried
+            </td>
+            <td>
+                <table>
+                    <tbody>
+                        <tr>
+                            {% for whisky in all_whisky %}
+                                <td>
+                                    <p>{{ whisky.distillery.name }} {{ whisky.name }}</p>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
     </table>
 {% endblock %}
