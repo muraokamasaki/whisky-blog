@@ -8,6 +8,10 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
+from flask_babel import Babel
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 
 from config import Config
 
@@ -18,6 +22,8 @@ login = LoginManager()
 login.login_view = 'auth.login'
 mail = Mail()
 moment = Moment()
+babel = Babel()
+admin = Admin()
 
 
 def create_app(config_class=Config):
@@ -29,6 +35,8 @@ def create_app(config_class=Config):
     login.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
+    babel.init_app(app)
+    admin.init_app(app)
 
     from app.errors.handlers import bp as errors_bp
     app.register_blueprint(errors_bp)
@@ -72,6 +80,8 @@ def create_app(config_class=Config):
 
         add_tag(app)
 
+    register_admins(app)
+
     return app
 
 
@@ -89,3 +99,26 @@ def add_tag(app):
                 db.session.add(models.Tag(name=t[0]))
 
         db.session.commit()
+
+
+def register_admins(app):
+    from flask_login import current_user
+    from app import db
+    from app.models import User, Review, Tag
+
+    class BaseModelView(ModelView):
+        def is_accessible(self):
+            return current_user.is_authenticated and current_user.id == 1
+
+    class UserView(BaseModelView):
+        column_exclude_list = ['password_hash']
+        can_create = False
+        can_edit = True
+
+    class ReviewView(BaseModelView):
+        can_create = False
+        can_edit = False
+
+    admin.add_view(UserView(User, db.session))
+    admin.add_view(ReviewView(Review, db.session))
+    admin.add_view(BaseModelView(Tag, db.session))

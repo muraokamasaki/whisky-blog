@@ -1,111 +1,59 @@
-2019-04-21 15:06:16,013 ERROR: Exception on /auth/login [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/app/auth/routes.py", line 26, in login
-    return render_template('auth/login.html', title='Sign In', form=form)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/masaki/whisky/app/templates/auth/login.html", line 2, in top-level template code
-    {% import 'forms.html' as forms %}
-  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
-    {% block app_content %}{% endblock app_content %}
-  File "/Users/masaki/whisky/app/templates/auth/login.html", line 13, in block "app_content"
-    <p>New User? <a href="{{ url_for(auth.register) }}">Click to Register</a></p>
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 430, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'auth' is undefined
-2019-04-21 15:06:24,088 ERROR: Exception on /auth/login [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/app/auth/routes.py", line 26, in login
-    return render_template('auth/login.html', title='Sign In', form=form)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/masaki/whisky/app/templates/auth/login.html", line 2, in top-level template code
-    {% import 'forms.html' as forms %}
-  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
-    {% block app_content %}{% endblock app_content %}
-  File "/Users/masaki/whisky/app/templates/auth/login.html", line 13, in block "app_content"
-    <p>New User? <a href="{{ url_for(auth.register) }}">Click to Register</a></p>
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 430, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'auth' is undefined
-2019-04-21 15:06:25,503 ERROR: Exception on /auth/login [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/app/auth/routes.py", line 26, in login
-    return render_template('auth/login.html', title='Sign In', form=form)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/masaki/whisky/app/templates/auth/login.html", line 2, in top-level template code
-    {% import 'forms.html' as forms %}
-  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
-    {% block app_content %}{% endblock app_content %}
-  File "/Users/masaki/whisky/app/templates/auth/login.html", line 13, in block "app_content"
-    <p>New User? <a href="{{ url_for(auth.register) }}">Click to Register</a></p>
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 430, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'auth' is undefined
+2019-04-22 12:58:28,838 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 12:58:39,834 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:02:18,404 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:02:28,105 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:02:48,959 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:03:29,185 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:04:38,796 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:06:08,903 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:06:34,527 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:06:47,248 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:06:56,960 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:07:22,445 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:08:49,123 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:11:08,212 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:16:45,244 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:22:28,130 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:22:35,465 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:23:40,101 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:31:30,214 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:35:17,076 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:36:21,281 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:41:50,184 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:42:13,795 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:42:52,587 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:43:09,811 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:43:26,881 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:45:18,963 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:48:40,887 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:50:36,090 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:50:58,943 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:51:29,462 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:52:24,736 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:53:09,302 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:58:46,606 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 13:58:50,640 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:01:40,948 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:03:15,673 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:07:56,698 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:09:52,543 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:10:55,327 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:11:16,189 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-22 14:11:52,284 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:25:34,308 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:31:53,578 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:34:25,068 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:36:48,101 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:37:10,019 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:40:53,186 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 16:42:56,955 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 17:03:41,439 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 17:38:26,203 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 17:42:39,116 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 18:25:36,039 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 18:26:30,192 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 18:27:50,226 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 18:43:39,959 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 22:18:47,570 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 22:19:40,633 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-23 22:22:32,627 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]

@@ -106,7 +106,7 @@ venv.bak/
 
 venv
 app.db
-microblog.log*
+**/WhiskyBlog.log*
 .DS_Store
 
 # User-specific stuff:
