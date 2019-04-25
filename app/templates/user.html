@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block app_content %}
     <table class="table">
@@ -8,12 +7,12 @@
             <td style="padding-left: 15px;">
                 <h1>{{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user == current_user %}<p><a href="{{ url_for('main.edit_profile') }}">{{ _('Edit Profile') }}</a></p>{% endif %}
+                {% if user == current_user %}<p><a href="{{ url_for('main.edit_profile') }}">Edit Profile</a></p>{% endif %}
             </td>
         </tr>
         <tr>
             <td width="200px">
-                <span class="glyphicon glyphicon-star"></span> Whiskies tried
+                Whiskies Liked
             </td>
             <td>
                 <table>
@@ -21,7 +20,7 @@
                         <tr>
                             {% for whisky in all_whisky %}
                                 <td>
-                                    <p>{{ whisky.distillery.name }} {{ whisky.name }}</p>
+                                    <a href="{{ url_for('main.whisky', id=whisky.id) }}">{{ whisky.distillery.name }} {{ whisky.name }}</a>
                                 </td>
                             {% endfor %}
                         </tr>

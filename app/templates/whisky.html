@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'base.html' %}
 
 {% block app_content %}
-    <h1>{{ whisky.distillery.name }} {{ whisky.name }} <span class="badge">{{ whisky.distillery.location }}</span></h1>
-    {% if whisky.about %}<p>{{ whisky.about }}</p>{% endif %}
-    <button class="btn btn-default">Tried it?</button>
-    {% if current_user.is_authenticated %}
-    <p><a class="btn btn-default" href="{{ url_for('main.edit_whisky', id=whisky.id) }}"
-          role="button">{{ _('Edit Whisky Info') }}</a></p>
-    <p><a href="{{ url_for('main.submit_review', id=whisky.id) }}">{{ _('Submit a review') }}</a></p>
-    {% endif %}
+    <h2>{{ whisky.distillery.name }} {{ whisky.name }} <span class="badge badge-secondary">{{ whisky.distillery.location }}</span></h2>
+{% if whisky.about %}<div class="container"><p>{{ whisky.about }}</p></div>{% endif %}
+    <br>
+    <p>
+        {% if current_user.is_authenticated %}
+        {% if current_user.has_whisky(whisky) %}
+        <a class="btn btn-outline-info active" href="{{ url_for('main.whisky_tried', id=whisky.id) }}" aria-pressed="true">Liked!</a>
+        {% else %}
+        <a class="btn btn-outline-info" href="{{ url_for('main.whisky_tried', id=whisky.id) }}" aria-pressed="false">Like it?</a>
+        {% endif %}
+        <a class="btn btn-outline-secondary" href="{{ url_for('main.edit_whisky', id=whisky.id) }}">Edit Whisky Info</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('main.submit_review', id=whisky.id) }}">Submit a review</a>
+        {% endif %}
+    </p>
     <hr>
     {% if reviews %}
     <table class="table table-hover">
@@ -19,19 +23,18 @@
         {% endfor %}
     </table>
     {% endif %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> {{ _('Newer posts') }}
+    <nav aria-label="whisky page">
+        <ul class="pagination">
+            <li class="page-item{% if not prev_url %} disabled{% endif %}">
+                <a class="page-link" href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Newer
                 </a>
             </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    {{ _('Older posts') }} <span aria-hidden="true">&rarr;</span>
+            <li class="page-item{% if not next_url %} disabled{% endif %}">
+                <a class="page-link" href="{{ next_url or '#' }}">
+                    Older <span aria-hidden="true">&rarr;</span>
                 </a>
             </li>
         </ul>
     </nav>
 {% endblock %}
-

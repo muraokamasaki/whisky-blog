@@ -1,47 +1,44 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'base.html' %}
+{% import 'forms.html' as forms %}
 
 {% block app_content %}
-    <h1>{{ _('Edit Whisky') }}</h1>
-    <h3>{{ whisky.distillery.name }} {{ whisky.name }}</h3>
-    <hr>
-    <div class="row">
-        <form action="" method="post" class="form" role="form">
+    <h1>Edit Whisky - {{ whisky.distillery.name }} {{ whisky.name }}</h1>
+    <hr><br>
+    <form action="" method="post" class="form" role="form">
+        <div class="row">
             <div class="col-md-5">
                 {{ form.hidden_tag() }}
-                {{ wtf.form_field(form.score) }}
-                {{ wtf.form_field(form.nose) }}
-                {{ wtf.form_field(form.palate) }}
-                {{ wtf.form_field(form.finish) }}
+                {{ forms.form_grp(form.score) }}
+                {{ forms.form_grp(form.nose) }}
+                {{ forms.form_grp(form.palate) }}
+                {{ forms.form_grp(form.finish) }}
             </div>
+            <div class="col-md-1"></div>
             <div class="col-md-4">
-                <div class="container-fluid">
-                    <div class="form-group>">
-                        <table class="table" style="margin-top:-9px;">
-                            <thead>
-                                <tr>
-                                    <th>{{ _('Tags') }}</th>
-                                </tr>
-                            </thead>
-                            {% for row in all_tags %}
-                            <tbody>
-                                <tr>
-                                    {% for tag in row %}
-                                    <td>
-                                        <label for="{{ tag }}" class="checkbox-inline">
-                                        <input id="{{ tag }}" name="add_tags" type="checkbox" value="{{ tag }}">{{ tag }}
-                                        </label>
-                                    </td>
-                                    {% endfor %}
-                                </tr>
-                            </tbody>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    {{ wtf.form_field(form.submit) }}
+                <div class="form-group form-check>">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        {% for row in all_tags %}
+                        <tbody>
+                            <tr>
+                                {% for tag in row %}
+                                <td>
+                                    <input id="{{ tag }}" name="add_tags" class="form-check-input" type="checkbox"
+                                           value="{{ tag }}" {% if tag in form.checked_tags %}checked{% endif %}>
+                                    <label for="{{ tag }}" class="form-check-label">{{ tag }}</label>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
                 </div>
+                {{ form.submit(class_="btn btn-primary") }}
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 {% endblock %}

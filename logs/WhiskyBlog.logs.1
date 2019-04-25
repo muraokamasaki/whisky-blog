@@ -1,0 +1,131 @@
+2019-04-24 19:23:14,219 ERROR: Exception on /whisky/2/submit [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/masaki/whisky/app/main/routes.py", line 188, in submit_review
+    return render_template('submit_review.html', form=form, whisky=wsk, all_tags=t)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/masaki/whisky/app/templates/submit_review.html", line 2, in top-level template code
+    {% import 'forms.html' as forms %}
+  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
+    {% block app_content %}{% endblock app_content %}
+  File "/Users/masaki/whisky/app/templates/submit_review.html", line 31, in block "app_content"
+    value="{{ tag }}" {% if tag in form.checked_tags %}checked{% endif %}>
+TypeError: argument of type 'NoneType' is not iterable
+2019-04-24 19:23:29,036 ERROR: Exception on /whisky/2/submit [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/masaki/whisky/app/main/routes.py", line 188, in submit_review
+    return render_template('submit_review.html', form=form, whisky=wsk, all_tags=t)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/masaki/whisky/app/templates/submit_review.html", line 2, in top-level template code
+    {% import 'forms.html' as forms %}
+  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
+    {% block app_content %}{% endblock app_content %}
+  File "/Users/masaki/whisky/app/templates/submit_review.html", line 31, in block "app_content"
+    value="{{ tag }}" {% if tag in form.checked_tags %}checked{% endif %}>
+TypeError: argument of type 'NoneType' is not iterable
+2019-04-24 19:23:33,409 ERROR: Exception on /whisky/1/submit [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/masaki/whisky/app/main/routes.py", line 188, in submit_review
+    return render_template('submit_review.html', form=form, whisky=wsk, all_tags=t)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/masaki/whisky/app/templates/submit_review.html", line 2, in top-level template code
+    {% import 'forms.html' as forms %}
+  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
+    {% block app_content %}{% endblock app_content %}
+  File "/Users/masaki/whisky/app/templates/submit_review.html", line 31, in block "app_content"
+    value="{{ tag }}" {% if tag in form.checked_tags %}checked{% endif %}>
+TypeError: argument of type 'NoneType' is not iterable
+2019-04-24 19:24:54,573 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:26:54,211 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:31:45,918 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:33:12,666 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:33:54,505 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:36:57,489 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:39:02,475 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:40:03,174 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:40:28,917 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:41:34,135 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:43:22,996 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:01:48,033 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:17:36,807 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:22:38,067 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:33:41,691 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:44:04,288 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:45:24,266 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:47:16,967 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:50:53,789 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:52:25,788 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]

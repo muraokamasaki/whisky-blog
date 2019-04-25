@@ -1,16 +1,15 @@
-import logging, os
+import os
+import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
-from flask import Flask, request, current_app, session
-from config import Config
+
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from flask_babel import Babel
+
+from config import Config
 
 
 db = SQLAlchemy()
@@ -18,10 +17,7 @@ migrate = Migrate()
 login = LoginManager()
 login.login_view = 'auth.login'
 mail = Mail()
-bootstrap = Bootstrap()
 moment = Moment()
-admin = Admin()
-babel = Babel()
 
 
 def create_app(config_class=Config):
@@ -32,12 +28,9 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
     mail.init_app(app)
-    bootstrap.init_app(app)
     moment.init_app(app)
-    admin.init_app(app)
-    babel.init_app(app)
 
-    from app.errors import bp as errors_bp
+    from app.errors.handlers import bp as errors_bp
     app.register_blueprint(errors_bp)
 
     from app.auth import bp as auth_bp
@@ -57,7 +50,7 @@ def create_app(config_class=Config):
             mail_handler = SMTPHandler(
                 mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
                 fromaddr='no-reply@' + app.config['MAIL_SERVER'],
-                toaddrs=app.config['ADMINS'], subject='Microblog failure',
+                toaddrs=app.config['ADMINS'], subject='Whisky Blog failure',
                 credentials=auth, secure=secure)
             mail_handler.setLevel(logging.ERROR)
             app.logger.addHandler(mail_handler)
@@ -68,52 +61,31 @@ def create_app(config_class=Config):
         else:
             if not os.path.exists('logs'):
                 os.mkdir('logs')
-            file_handler = RotatingFileHandler('logs/microblog.logs', maxBytes=10240, backupCount=10)
+            file_handler = RotatingFileHandler('logs/WhiskyBlog.logs', maxBytes=10240, backupCount=10)
             file_handler.setFormatter(logging.Formatter(
                 '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
             file_handler.setLevel(logging.INFO)
             app.logger.addHandler(file_handler)
 
         app.logger.setLevel(logging.INFO)
-        app.logger.info('Microblog startup')
+        app.logger.info('Whisky Blog startup')
 
-    register_admins(app)
+        add_tag(app)
 
     return app
-
-
-@babel.localeselector
-def get_locale():
-    try:
-        language = session['language']
-    except KeyError:
-        language = None
-    if language is not None:
-        return language
-    return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
 
 from app import models
 
 
-def register_admins(app):
-    from flask_login import current_user
+def add_tag(app):
     from app import db
-    from app.models import User, Review, Tag
+    from app.models import Tag
+    from app.main.info import all_tags
 
-    class BaseModelView(ModelView):
-        def is_accessible(self):
-            return current_user.is_authenticated and current_user.id == 1
+    with app.app_context():
+        for t in all_tags:
+            if models.Tag.query.filter_by(name=t[0]).first() is None:
+                db.session.add(models.Tag(name=t[0]))
 
-    class UserView(BaseModelView):
-        column_exclude_list = ['password_hash']
-        can_create = False
-        can_edit = True
-
-    class ReviewView(BaseModelView):
-        can_create = False
-        can_edit = False
-
-    admin.add_view(UserView(User, db.session))
-    admin.add_view(ReviewView(Review, db.session))
-    admin.add_view(BaseModelView(Tag, db.session))
+        db.session.commit()

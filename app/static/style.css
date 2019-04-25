@@ -18,16 +18,12 @@ p, div, a {
 }
 
 body {
+    margin-top: 85px;
     background: url("./swirl.png") repeat 0 0;
 }
 
 .table .table {
     margin-bottom: -10px;
-}
-
-hr#whisky_popup {
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 hr#post {

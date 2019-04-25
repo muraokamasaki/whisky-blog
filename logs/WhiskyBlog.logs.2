@@ -1,0 +1,105 @@
+2019-04-24 15:48:13,315 ERROR: Exception on /whisky/2/submit [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/masaki/whisky/app/main/routes.py", line 190, in submit_review
+    review = Review.query.filter_by(author=current_user.id).first()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1792, in filter_by
+    for key, value in kwargs.items()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1792, in <listcomp>
+    for key, value in kwargs.items()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/sql/operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 211, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/relationships.py", line 1093, in __eq__
+    other, adapt_source=self.adapter
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/relationships.py", line 1466, in _optimized_compare
+    state = attributes.instance_state(state)
+AttributeError: 'int' object has no attribute '_sa_instance_state'
+2019-04-24 15:49:20,618 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 15:49:22,009 ERROR: Exception on /whisky/2/submit [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/masaki/whisky/app/main/routes.py", line 189, in submit_review
+    review = Review.query.filter_by(author=current_user.id).first()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1792, in filter_by
+    for key, value in kwargs.items()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1792, in <listcomp>
+    for key, value in kwargs.items()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/sql/operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 211, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/relationships.py", line 1093, in __eq__
+    other, adapt_source=self.adapter
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/relationships.py", line 1466, in _optimized_compare
+    state = attributes.instance_state(state)
+AttributeError: 'int' object has no attribute '_sa_instance_state'
+2019-04-24 15:49:31,785 ERROR: Exception on /whisky/1/submit [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/masaki/whisky/app/main/routes.py", line 189, in submit_review
+    review = Review.query.filter_by(author=current_user.id).first()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1792, in filter_by
+    for key, value in kwargs.items()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1792, in <listcomp>
+    for key, value in kwargs.items()
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/sql/operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/attributes.py", line 211, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/relationships.py", line 1093, in __eq__
+    other, adapt_source=self.adapter
+  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/sqlalchemy/orm/relationships.py", line 1466, in _optimized_compare
+    state = attributes.instance_state(state)
+AttributeError: 'int' object has no attribute '_sa_instance_state'
+2019-04-24 15:50:11,272 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:39:53,734 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:42:58,235 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:43:51,212 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:45:06,523 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:45:29,277 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:45:41,986 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:47:32,031 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:54:21,714 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 16:57:44,125 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 19:22:43,470 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]

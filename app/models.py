@@ -1,10 +1,12 @@
-import jwt
 from datetime import datetime
 from hashlib import md5
 from time import time
+
+import jwt
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+
 from app import db, login
 
 
@@ -12,17 +14,23 @@ tags = db.Table('tags',
                 db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
                 db.Column('review_id', db.Integer, db.ForeignKey('review.id'), primary_key=True))
 
+whiskies_listed = db.Table('whiskies_listed',
+                           db.Column('whisky_id', db.Integer, db.ForeignKey('whisky.id'), primary_key=True),
+                           db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True))
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    reviews = db.relationship('Review', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
+    reviews = db.relationship('Review', backref='author', lazy='dynamic')
+    whiskies_listed = db.relationship('Whisky', secondary=whiskies_listed, lazy='dynamic',
+                                      backref=db.backref('users', lazy='dynamic'))
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f'<{type(self).__name__}(id={self.id}, username={self.username})>'
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -39,10 +47,21 @@ class User(UserMixin, db.Model):
                           current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     def not_commented(self, id):
-        try:
-            return not self.reviews.filter_by(whisky_id=id).first_or_404()
-        except:
-            return True
+        return not self.reviews.filter_by(whisky_id=id).first()
+
+    def get_whiskies_listed(self):
+        return self.whiskies_listed.all()
+
+    def add_whisky(self, wsk):
+        if not self.has_whisky(wsk):
+            self.whiskies_listed.append(wsk)
+
+    def remove_whisky(self, wsk):
+        if self.has_whisky(wsk):
+            self.whiskies_listed.remove(wsk)
+
+    def has_whisky(self, wsk):
+        return self.whiskies_listed.filter(Whisky.id == wsk.id).count() > 0
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -54,8 +73,8 @@ class User(UserMixin, db.Model):
 
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(id_num):
+    return User.query.get(int(id_num))
 
 
 class Review(db.Model):
@@ -71,7 +90,10 @@ class Review(db.Model):
                            backref=db.backref('reviews', lazy='dynamic'))
 
     def __repr__(self):
-        return '<Review {}>'.format(self.id)
+        return f'<{type(self).__name__}(id={self.id})>'
+
+    def get_tags(self):
+        return self.tags.all()
 
     def add_tag(self, tag):
         if not self.is_tagged(tag):
@@ -93,20 +115,28 @@ class Whisky(db.Model):
     reviews = db.relationship('Review', backref='whisky', lazy='dynamic')
 
     def __repr__(self):
-        return '<{0} {1}>'.format(self.distillery.name, self.name)
+        return f'<{type(self).__name__}(id={self.id}, distillery={self.distillery.name}, name={self.name})>'
 
     def number_reviews(self):
         return self.reviews.count() if not None else 0
+
+    def get_users(self):
+        return self.users.all()
 
 
 class Distillery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     location = db.Column(db.String(64), index=True)
+    owner = db.Column(db.String(64))
+    founded = db.Column(db.Integer)
     whiskys = db.relationship('Whisky', backref='distillery', lazy='dynamic')
 
     def __repr__(self):
-        return '<Distillery {}>'.format(self.name)
+        return f'<{type(self).__name__}(id={self.id}, name={self.name})>'
+
+    def has_whiskies(self):
+        return self.whiskys.count() if not None else 0
 
 
 class Tag(db.Model):
@@ -114,4 +144,7 @@ class Tag(db.Model):
     name = db.Column(db.String(64), unique=True)
 
     def __repr__(self):
-        return '<Tag {}>'.format(self.name)
+        return f'<{type(self).__name__}(id={self.id}, name={self.name})>'
+
+    def get_reviews(self):
+        return self.reviews.all()
