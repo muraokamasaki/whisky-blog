@@ -2,7 +2,7 @@ import os
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 
-from flask import Flask
+from flask import Flask, session, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -83,6 +83,17 @@ def create_app(config_class=Config):
     register_admins(app)
 
     return app
+
+
+@babel.localeselector
+def get_locale():
+    try:
+        language = session['language']
+    except KeyError:
+        language = None
+    if language is not None:
+        return language
+    return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
 
 from app import models

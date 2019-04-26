@@ -1,4 +1,33 @@
-2019-04-21 15:10:56,444 ERROR: Exception on /whisky_list [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
+2019-04-24 20:53:13,329 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:57:42,895 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:58:18,199 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:58:52,642 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 20:59:28,854 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:02:45,021 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:03:17,927 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:04:03,521 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:04:54,893 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:05:50,024 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:07:09,110 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:07:53,791 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:08:39,198 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:09:28,662 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:09:50,107 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:10:13,091 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:10:48,634 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:11:39,431 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:12:08,875 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:14:51,622 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:16:59,088 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:18:51,278 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:20:46,441 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:26:10,308 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:27:27,077 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:31:00,284 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:38:22,624 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:38:52,453 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:39:58,696 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:40:22,335 ERROR: Exception on /whisky/1 [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,8 +41,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/app/main/routes.py", line 93, in whisky_list
-    return render_template('whisky_list.html', title='All distilleries', all_distillery=all_distillery)
+  File "/Users/masaki/whisky/app/main/routes.py", line 66, in whisky
+    whisky=wsk, reviews=reviews.items, next_url=next_url, prev_url=prev_url)
   File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
     context, ctx.app)
   File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
@@ -26,109 +55,22 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/Users/masaki/whisky/app/templates/whisky_list.html", line 1, in top-level template code
+  File "/Users/masaki/whisky/app/templates/whisky.html", line 1, in top-level template code
     {% extends 'base.html' %}
-  File "/Users/masaki/whisky/app/templates/base.html", line 72, in top-level template code
+  File "/Users/masaki/whisky/app/templates/base.html", line 71, in top-level template code
     {% block app_content %}{% endblock app_content %}
-  File "/Users/masaki/whisky/app/templates/whisky_list.html", line 12, in block "app_content"
-    {% include "_distillery.html" %}
-  File "/Users/masaki/whisky/app/templates/_distillery.html", line 8, in top-level template code
-    <a href="{{ url_for('main.distillery', id=distillery.id) }}">{{ distillery.name }}</a>
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/helpers.py", line 356, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2061, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/helpers.py", line 345, in url_for
-    force_external=external)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/werkzeug/routing.py", line 2181, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'main.distillery' with values ['id']. Did you forget to specify values ['id_num']?
-2019-04-21 15:12:14,933 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-21 15:13:15,922 ERROR: Exception on /whisky/1/submit [POST] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/masaki/whisky/app/main/routes.py", line 171, in submit_review
-    review.add_tag(Tag.query.filter_by(name=tag).first())
-  File "/Users/masaki/whisky/app/models.py", line 80, in add_tag
-    if not self.is_tagged(tag):
-  File "/Users/masaki/whisky/app/models.py", line 88, in is_tagged
-    return self.tags.filter(Tag.id == tag.id).count() > 0
-AttributeError: 'NoneType' object has no attribute 'id'
-2019-04-21 15:16:37,664 ERROR: Exception on /whisky/1/submit [POST] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/masaki/whisky/app/main/routes.py", line 171, in submit_review
-    review.add_tag(Tag.query.filter_by(name=tag).first())
-  File "/Users/masaki/whisky/app/models.py", line 80, in add_tag
-    if not self.is_tagged(tag):
-  File "/Users/masaki/whisky/app/models.py", line 88, in is_tagged
-    return self.tags.filter(Tag.id == tag.id).count() > 0
-AttributeError: 'NoneType' object has no attribute 'id'
-2019-04-21 15:25:17,646 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-21 15:26:51,210 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-21 15:27:11,474 ERROR: Exception on /whisky/1/submit [POST] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/masaki/whisky/app/main/routes.py", line 171, in submit_review
-    review.add_tag(Tag.query.filter_by(name=tag).first())
-  File "/Users/masaki/whisky/app/models.py", line 80, in add_tag
-    if not self.is_tagged(tag):
-  File "/Users/masaki/whisky/app/models.py", line 88, in is_tagged
-    return self.tags.filter(Tag.id == tag.id).count() > 0
-AttributeError: 'NoneType' object has no attribute 'id'
-2019-04-22 11:12:33,126 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 11:15:33,302 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 11:17:40,926 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 11:26:38,015 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 11:29:12,942 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 11:29:45,405 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:14:52,249 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:36:46,955 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:39:56,474 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:40:08,724 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:40:35,865 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:43:05,483 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:51:36,873 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:52:26,400 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
-2019-04-22 12:55:37,608 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+  File "/Users/masaki/whisky/app/templates/whisky.html", line 8, in block "app_content"
+    {% if current_user.has_whisky(whisky) %}
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'has_whisky'
+2019-04-24 21:42:25,335 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:44:07,638 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:45:10,332 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:45:17,288 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:45:24,891 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:46:48,829 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-24 21:49:49,138 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-25 14:38:01,262 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:71]
+2019-04-25 18:10:20,758 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-25 18:14:29,105 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-25 18:14:47,398 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-25 18:17:27,469 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]

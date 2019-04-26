@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_babel import _
 
 from app import db
 from app.auth import bp
@@ -16,14 +17,14 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash(_('Invalid username or password'))
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or not next_page.startswith('/'):
             next_page = url_for('main.home')
         return redirect(next_page)
-    return render_template('auth/login.html', title='Sign In', form=form)
+    return render_template('auth/login.html', title=_('Sign In'), form=form)
 
 
 @bp.route('/logout')
@@ -43,9 +44,9 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('You have now registered!')
+        flash(_('You have now registered!'))
         return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', title='Register', form=form)
+    return render_template('auth/register.html', title=_('Register'), form=form)
 
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
@@ -57,9 +58,9 @@ def reset_password_request():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             send_password_reset_email(user)
-        flash('Check your email for instructions')
+        flash(_('Check your email for instructions'))
         return redirect(url_for('auth.login'))
-    return render_template('auth/reset_password_request.html', title='Reset Password', form=form)
+    return render_template('auth/reset_password_request.html', title=_('Reset Password'), form=form)
 
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -73,6 +74,6 @@ def reset_password(token):
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('You have changed your password')
+        flash(_('You have changed your password'))
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)

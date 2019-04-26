@@ -2,7 +2,7 @@
 {% import 'forms.html' as forms %}
 
 {% block app_content %}
-    <h1>Edit Whisky - {{ whisky.distillery.name }} {{ whisky.name }}</h1>
+    <h1>{{ _('Edit Whisky') }} - {{ whisky.distillery.name }} {{ whisky.name }}</h1>
     <hr><br>
     <form action="" method="post" class="form" role="form">
         <div class="row">
@@ -19,7 +19,7 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>Tags</th>
+                                <th>{{ _('Tags') }}</th>
                             </tr>
                         </thead>
                         {% for row in all_tags %}

@@ -31,8 +31,8 @@
     {% else %}
     <tr>
         <td>
-            <span>No whiskies added yet -
-                <a href="{{ url_for('main.add_whisky', id=distillery.id) }}">Add one here</a>
+            <span>{{ _('No whiskies added yet') }} -
+                <a href="{{ url_for('main.add_whisky', id=distillery.id) }}">{{ _('Add one here') }}</a>
             </span>
         </td>
     </tr>

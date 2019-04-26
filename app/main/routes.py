@@ -1,5 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, abort, g, current_app, session, jsonify
 from flask_login import current_user, login_required
+from flask_babel import get_locale, _
 
 from app import db
 from app.models import User, Review, Whisky, Distillery, Tag
@@ -7,6 +8,18 @@ from app.main import bp
 from app.main.forms import EditProfileForm, ReviewForm, AddWhiskyForm, AddDistilleryForm, EditWhiskyForm, \
     EditDistilleryForm
 from app.main.info import all_tags
+
+
+@bp.before_app_request
+def before_request():
+    g.locale = str(get_locale())
+
+
+# context processor injects the current language as CURRENT_LANGUAGE into all templates (used in base.html)
+@bp.context_processor
+def inject_conf_var():
+    return dict(CURRENT_LANGUAGE=session.get('language',
+                                             request.accept_languages.best_match(current_app.config['LANGUAGES'])))
 
 
 @bp.route('/')
@@ -153,11 +166,11 @@ def whisky_list():
 def whisky_popup(id):
     wsk = Whisky.query.filter_by(id=id).first_or_404()
     if wsk.number_reviews() == 1:
-        msg = 'There is 1 review.'
+        msg = _('There is 1 review.')
     elif wsk.number_reviews() == 0:
-        msg = 'There are no reviews.'
+        msg = _('There are no reviews.')
     else:
-        msg = f'There are {wsk.number_reviews()} reviews.'
+        msg = _('There are %(num)s reviews.', num=str(wsk.number_reviews()))
     return jsonify(message=msg)
 
 
@@ -202,7 +215,8 @@ def add_whisky(id):
 def add_distillery():
     form = AddDistilleryForm()
     if form.validate_on_submit():
-        dist = Distillery(name=form.name.data.title(), location=form.region.data)
+        dist = Distillery(name=form.name.data.title(), location=form.region.data,
+                          owner=form.owner.data, founded=form.founded.data)
         db.session.add(dist)
         db.session.commit()
         flash('Distillery added')

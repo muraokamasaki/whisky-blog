@@ -1,64 +1,12 @@
-2019-04-25 18:41:03,235 ERROR: Exception on /admin/user/ [GET] [in /Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
-    raise value
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/base.py", line 69, in inner
-    return self._run_view(f, *args, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/base.py", line 368, in _run_view
-    return fn(self, *args, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/model/base.py", line 2056, in index_view
-    return_url=self._get_list_url(view_args),
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/base.py", line 308, in render
-    return render_template(template, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 135, in render_template
-    context, ctx.app)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask/templating.py", line 117, in _render
-    rv = template.render(context)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/list.html", line 6, in top-level template code
-    {% import 'admin/model/row_actions.html' as row_actions with context %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/master.html", line 1, in top-level template code
-    {% extends admin_base_template %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 35, in top-level template code
-    {% block page_body %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 64, in block "page_body"
-    {% block body %}{% endblock %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/list.html", line 69, in block "body"
-    {% block model_list_table %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/list.html", line 117, in block "model_list_table"
-    {% block list_row scoped %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/list.html", line 123, in block "list_row"
-    {% block list_row_actions_column scoped %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/list.html", line 126, in block "list_row_actions_column"
-    {% block list_row_actions scoped %}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/list.html", line 128, in block "list_row_actions"
-    {{ action.render_ctx(get_pk_value(row), row) }}
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/model/template.py", line 16, in render_ctx
-    return self.render(context, row_id, row)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/model/template.py", line 74, in render
-    return m(self, row_id, row)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/jinja2/runtime.py", line 579, in _invoke
-    rv = self._func(*arguments)
-  File "/Users/masaki/whisky/venv/lib/python3.7/site-packages/flask_admin/templates/bootstrap2/admin/model/row_actions.html", line 27, in template
-    {{ delete_form.id(value=get_pk_value(row)) }}
-jinja2.exceptions.UndefinedError: 'None' has no attribute 'id'
-2019-04-25 18:41:38,532 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
-2019-04-25 18:57:09,725 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
-2019-04-25 18:58:50,944 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 13:39:27,964 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 13:40:44,677 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 13:41:02,516 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:16:11,636 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:18:53,223 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:19:29,104 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:19:44,078 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:26:19,277 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:26:34,853 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:27:02,120 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:27:36,410 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
+2019-04-26 14:30:37,160 INFO: Whisky Blog startup [in /Users/masaki/whisky/app/__init__.py:79]
