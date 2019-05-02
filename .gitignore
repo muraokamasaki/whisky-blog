@@ -106,7 +106,7 @@ venv.bak/
 
 venv
 app.db
-**/WhiskyBlog.log*
+**/*.log*
 .DS_Store
 
 # User-specific stuff:
@@ -141,3 +141,4 @@ Session.vim
 tags
 
 messages.pot
+\logs
