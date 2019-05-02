@@ -6,12 +6,13 @@ from app import db
 from app.models import User, Review, Whisky, Distillery, Tag
 from app.main import bp
 from app.main.forms import EditProfileForm, ReviewForm, AddWhiskyForm, AddDistilleryForm, EditWhiskyForm, \
-    EditDistilleryForm
+    EditDistilleryForm, SearchForm
 from app.main.info import all_tags
 
 
 @bp.before_app_request
 def before_request():
+    g.search_form = SearchForm()
     g.locale = str(get_locale())
 
 
@@ -245,7 +246,7 @@ def edit_distillery(id):
     return render_template('edit_form.html', title='Edit distillery', form=form, distillery=dist)
 
 
-"""Routes for miscellaneous"""
+"""Routes for other views or functions"""
 
 
 @bp.route('/recipes')
@@ -258,3 +259,31 @@ def recipe_page():
 def set_language(language=None):
     session['language'] = language
     return redirect(url_for('main.home'))
+
+
+@bp.route('/search')
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('main.explore'))
+    page = request.args.get('page', 1, type=int)
+    tags_queried, excluded_queries, normal_queries = [], [], []
+    query = g.search_form.data['q'].split()
+    for word in query:
+        if word[0] == '@':
+            tags_queried.append(word[1:].title())
+        elif word[0] == '-':
+            excluded_queries.append(word[1:])
+        else:
+            normal_queries.append(word)
+    excluded_queries, normal_queries = ' '.join(excluded_queries), ' '.join(normal_queries)
+
+    posts, num_revs = Review.search(normal_queries, excluded_queries, page, current_app.config['POSTS_PER_PAGE'])
+    if tags_queried:
+        if num_revs > 0:
+            posts = posts.join(Review.tags, aliased=True).filter(Tag.name.in_(tags_queried))
+        else:
+            posts = Review.query.join(Review.tags, aliased=True).filter(Tag.name.in_(tags_queried))
+    next_url = url_for('search', q=g.search_form.q.data['q'], page=page + 1) \
+        if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
+    prev_url = url_for('search', q=g.search_form.q.data['q'], page=page - 1) if page > 1 else None
+    return render_template('search.html', title='Search', reviews=posts, next_url=next_url, prev_url=prev_url)

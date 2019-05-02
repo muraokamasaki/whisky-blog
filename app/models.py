@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 from app import db, login
+from app.search import add_doc_to_index, remove_doc_from_index, query_index
 
 
 tags = db.Table('tags',
@@ -17,6 +18,46 @@ tags = db.Table('tags',
 whiskies_listed = db.Table('whiskies_listed',
                            db.Column('whisky_id', db.Integer, db.ForeignKey('whisky.id'), primary_key=True),
                            db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True))
+
+
+class SearchableMixin:
+    """Wrapper for query_document that converts the list of ids into a sqlalchemy query object in the same order."""
+    @classmethod
+    def search(cls, expr, excluded, page, per_page):
+        ids, total = query_index(cls.__tablename__, expr, excluded, page, per_page)
+        if total == 0:
+            return cls.query.filter_by(id=0), 0
+        # append to when in the order that is returned by elasticsearch
+        when = []
+        for i, v in enumerate(ids):
+            when.append((v, i))
+        return cls.query.filter(cls.id.in_(ids)).order_by(db.case(when, value=cls.id)), total
+
+    """Saves all changes to be committed in _changes in the db session before actually committing."""
+    @classmethod
+    def before_commit(cls, session):
+        session._changes = {
+            'add': [obj for obj in session.new if isinstance(obj, cls)],
+            'update': [obj for obj in session.dirty if isinstance(obj, cls)],
+            'delete': [obj for obj in session.deleted if isinstance(obj, cls)]
+        }
+
+    """Updates the elasticsearch index with all changes that were committed."""
+    @classmethod
+    def after_commit(cls, session):
+        for obj in session._changes['add']:
+            add_doc_to_index(cls.__tablename__, obj)
+        for obj in session._changes['update']:
+            add_doc_to_index(cls.__tablename__, obj)
+        for obj in session._changes['delete']:
+            remove_doc_from_index(cls.__tablename__, obj)
+        session._changes = None
+
+    """Refreshes an index with objects from the database"""
+    @classmethod
+    def reindex(cls):
+        for obj in cls.query:
+            add_doc_to_index(cls.__tablename__, obj)
 
 
 class User(UserMixin, db.Model):
@@ -77,7 +118,8 @@ def load_user(id_num):
     return User.query.get(int(id_num))
 
 
-class Review(db.Model):
+class Review(SearchableMixin, db.Model):
+    searchable_fields = ['nose', 'palate', 'finish']
     id = db.Column(db.Integer, primary_key=True)
     nose = db.Column(db.String(255))
     palate = db.Column(db.String(255))
@@ -105,6 +147,10 @@ class Review(db.Model):
 
     def is_tagged(self, tag):
         return self.tags.filter(Tag.id == tag.id).count() > 0
+
+
+db.event.listen(db.session, 'before_commit', Review.before_commit)
+db.event.listen(db.session, 'after_commit', Review.after_commit)
 
 
 class Whisky(db.Model):

@@ -21,3 +21,4 @@ class Config:
     POSTS_PER_PAGE = 15
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     LANGUAGES = ['en', 'ja']
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')

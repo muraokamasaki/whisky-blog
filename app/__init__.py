@@ -2,6 +2,7 @@ import os
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 
+from elasticsearch import Elasticsearch
 from flask import Flask, session, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -16,7 +17,8 @@ from flask_admin.contrib.sqla import ModelView
 from config import Config
 
 
-db = SQLAlchemy()
+# Turn off autoflush to let review editing to be saved in session.dirty
+db = SQLAlchemy(session_options={"autoflush": False})
 migrate = Migrate()
 login = LoginManager()
 login.login_view = 'auth.login'
@@ -37,6 +39,7 @@ def create_app(config_class=Config):
     moment.init_app(app)
     babel.init_app(app)
     admin.init_app(app)
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) if app.config['ELASTICSEARCH_URL'] else None
 
     from app.errors.handlers import bp as errors_bp
     app.register_blueprint(errors_bp)
@@ -78,7 +81,7 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info('Whisky Blog startup')
 
-        add_tag(app)
+        register_tags(app)
 
     register_admins(app)
 
@@ -99,15 +102,15 @@ def get_locale():
 from app import models
 
 
-def add_tag(app):
+def register_tags(app):
     from app import db
     from app.models import Tag
     from app.main.info import all_tags
 
     with app.app_context():
         for t in all_tags:
-            if models.Tag.query.filter_by(name=t[0]).first() is None:
-                db.session.add(models.Tag(name=t[0]))
+            if Tag.query.filter_by(name=t[0]).first() is None:
+                db.session.add(Tag(name=t[0]))
 
         db.session.commit()
 

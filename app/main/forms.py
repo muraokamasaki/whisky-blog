@@ -1,3 +1,4 @@
+from flask import request
 from flask_wtf import FlaskForm
 from flask_babel import _, lazy_gettext as _l
 from wtforms import StringField, SubmitField, TextAreaField, SelectField,\
@@ -96,3 +97,14 @@ class EditWhiskyForm(FlaskForm):
             whisky = Whisky.query.filter_by(distillery_id=self.distillery.id).filter_by(name=name.data).first()
             if whisky is not None:
                 raise ValidationError(_('There is already a whisky with that name'))
+
+
+class SearchForm(FlaskForm):
+    q = StringField('Search', validators=[DataRequired()])
+
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super().__init__(*args, **kwargs)
