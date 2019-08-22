@@ -31,7 +31,7 @@ hr#post {
     margin-bottom: 5px;
 }
 
-button#search {
+button#search, a#adv_search, div#sort {
     margin-top: 15px;
     margin-left: 30px;
 }

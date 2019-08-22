@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from flask_babel import _, lazy_gettext as _l
 from wtforms import StringField, SubmitField, TextAreaField, SelectField,\
     SelectMultipleField, IntegerField
-from wtforms.validators import DataRequired, ValidationError, Length, NumberRange
+from wtforms.validators import DataRequired, ValidationError, Length, NumberRange, optional
 
 from app.models import User, Distillery, Whisky
 from app.main.info import all_tags, locations
@@ -12,7 +12,7 @@ from app.main.info import all_tags, locations
 class EditProfileForm(FlaskForm):
     username = StringField(_l('Username'), validators=[DataRequired()])
     about_me = TextAreaField(_l('About Me'), validators=[Length(min=0, max=140)])
-    submit = SubmitField(_('Submit'))
+    submit = SubmitField(_l('Submit'))
 
     def __init__(self, original_username, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -108,3 +108,16 @@ class SearchForm(FlaskForm):
         if 'csrf_enabled' not in kwargs:
             kwargs['csrf_enabled'] = False
         super().__init__(*args, **kwargs)
+
+
+class AdvancedSearchForm(FlaskForm):
+    review = StringField(_l('Nose / Palate / Finish'))
+    score_lt = IntegerField(_l('Score Lower Bound'), validators=[
+        NumberRange(min=0, max=100, message=_l('Please give a score from 0 to 100')), optional()])
+    score_gt = IntegerField(_l('Score Upper Bound'), validators=[
+        NumberRange(min=0, max=100, message=_l('Please give a score from 0 to 100')), optional()])
+    add_tags = SelectMultipleField(_l('Tags'), choices=all_tags)
+    whisky = StringField(_l('Distillery / Whisky name'))
+    user = StringField(_l('Author Username'))
+    checked_tags = {}
+    submit = SubmitField(_l('Submit'))

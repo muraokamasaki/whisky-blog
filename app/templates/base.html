@@ -35,12 +35,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.whisky_list') }}">{{ _('All Whiskies') }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.recipe_page') }}">{{ _('Recipes') }}</a>
-                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <form class="form-inline mr-sm-2" method="get" action="{{ url_for('main.search') }}">
+                <form class="form-inline mr-sm-2" method="get" action="{{ url_for('main.search', sort='rel') }}">
                     {{ g.search_form.q(size=20, class='form-control', placeholder=g.search_form.q.label.text) }}
                 </form>
                 {% for lang in config.LANGUAGES %}

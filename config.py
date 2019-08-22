@@ -18,7 +18,7 @@ class Config:
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['mrokwhisky@gmail.com']
-    POSTS_PER_PAGE = 15
+    POSTS_PER_PAGE = 8
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     LANGUAGES = ['en', 'ja']
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')

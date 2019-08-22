@@ -1,20 +1,22 @@
 import os
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
+import pprint
 
 from elasticsearch import Elasticsearch
-from flask import Flask, session, request, current_app
+from flask import Flask, session, request, current_app, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_babel import Babel
-from flask_admin import Admin
+from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 
 
 from config import Config
+from app.search import get_mappings, insert_mapping, delete_mapping
 
 
 # Turn off autoflush to let review editing to be saved in session.dirty
@@ -83,11 +85,10 @@ def create_app(config_class=Config):
 
         register_tags(app)
 
-    register_admins(app)
-
     return app
 
 
+# Looks for the language the current flask app is set to.
 @babel.localeselector
 def get_locale():
     try:
@@ -97,9 +98,6 @@ def get_locale():
     if language is not None:
         return language
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
-
-
-from app import models
 
 
 def register_tags(app):
@@ -115,24 +113,59 @@ def register_tags(app):
         db.session.commit()
 
 
-def register_admins(app):
-    from flask_login import current_user
-    from app import db
-    from app.models import User, Review, Tag
+from app import models
 
-    class BaseModelView(ModelView):
-        def is_accessible(self):
-            return current_user.is_authenticated and current_user.id == 1
 
-    class UserView(BaseModelView):
-        column_exclude_list = ['password_hash']
-        can_create = False
-        can_edit = True
+"""Create custom admin views for `User`, `Review` and `Tag` models"""
 
-    class ReviewView(BaseModelView):
-        can_create = False
-        can_edit = False
 
-    admin.add_view(UserView(User, db.session))
-    admin.add_view(ReviewView(Review, db.session))
-    admin.add_view(BaseModelView(Tag, db.session))
+class BaseModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.id == 1
+
+
+class UserView(BaseModelView):
+    column_exclude_list = ['password_hash']
+    can_create = False
+    can_edit = True
+
+
+class ReviewView(BaseModelView):
+    can_create = False
+    can_edit = False
+
+
+class TagView(BaseModelView):
+    @expose('/bulk/', methods=['GET', 'POST'])
+    def bulk_view(self):
+        # TODO add bulk add for tags
+        pass
+
+
+class SearchView(BaseView):
+    @expose('/')
+    def index(self):
+        maps = get_mappings()
+        return self.render('admin/search.html', mapping=pprint.pformat(maps))
+
+    @expose('/insert/')
+    def insert(self):
+        # insert elasticsearch mapping
+        insert_mapping('review')
+        return redirect('/admin/search')
+
+    @expose('/delete/')
+    def delete(self):
+        # delete elasticsearch mapping
+        delete_mapping('review')
+        return redirect('/admin/search')
+
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.id == 1
+
+
+admin.add_view(UserView(models.User, db.session))
+admin.add_view(ReviewView(models.Review, db.session))
+admin.add_view(TagView(models.Tag, db.session))
+admin.add_view(SearchView(name='Search', endpoint='search'))
+

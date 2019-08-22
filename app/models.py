@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 from app import db, login
-from app.search import add_doc_to_index, remove_doc_from_index, query_index
+from app.search import add_doc_to_index, remove_doc_from_index
 
 
 tags = db.Table('tags',
@@ -21,10 +21,10 @@ whiskies_listed = db.Table('whiskies_listed',
 
 
 class SearchableMixin:
-    """Wrapper for query_document that converts the list of ids into a sqlalchemy query object in the same order."""
+    """Wrapper for `func` that converts the list of ids into a sqlalchemy query object in the same order."""
     @classmethod
-    def search(cls, expr, excluded, page, per_page):
-        ids, total = query_index(cls.__tablename__, expr, excluded, page, per_page)
+    def search(cls, func, **kwargs):
+        ids, total = func(cls.__tablename__, **kwargs)
         if total == 0:
             return cls.query.filter_by(id=0), 0
         # append to when in the order that is returned by elasticsearch
@@ -119,7 +119,8 @@ def load_user(id_num):
 
 
 class Review(SearchableMixin, db.Model):
-    searchable_fields = ['nose', 'palate', 'finish']
+    # `searchable_fields` are those to be indexed by elasticsearch
+    searchable_fields = ['nose', 'palate', 'finish', 'score', 'timestamp', 'distillery_', 'whisky_', 'tags_', 'user_']
     id = db.Column(db.Integer, primary_key=True)
     nose = db.Column(db.String(255))
     palate = db.Column(db.String(255))

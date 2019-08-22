@@ -6,8 +6,9 @@ from app import db
 from app.models import User, Review, Whisky, Distillery, Tag
 from app.main import bp
 from app.main.forms import EditProfileForm, ReviewForm, AddWhiskyForm, AddDistilleryForm, EditWhiskyForm, \
-    EditDistilleryForm, SearchForm
+    EditDistilleryForm, SearchForm, AdvancedSearchForm
 from app.main.info import all_tags
+from app.search import query_advanced, query_index
 
 
 @bp.before_app_request
@@ -36,6 +37,12 @@ def explore():
     next_url = url_for('main.explore', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('main.explore', page=posts.prev_num) if posts.has_prev else None
     return render_template('explore.html', title='Explore', reviews=posts.items, next_url=next_url, prev_url=prev_url)
+
+
+@bp.route('/language/<language>')
+def set_language(language=None):
+    session['language'] = language
+    return redirect(url_for('main.home'))
 
 
 """Routes for user profile"""
@@ -104,12 +111,16 @@ def submit_review(id):
     form = ReviewForm()
     t = [[x[0] for x in all_tags[i*4:(i*4)+4]] for i in range(len(all_tags) // 4 + 1)]
     if form.validate_on_submit():
-        review = Review(nose=form.nose.data, palate=form.palate.data, finish=form.finish.data,
-                        score=form.score.data, author=current_user, whisky=wsk)
-        db.session.add(review)
-        db.session.commit()
+        tags = []
         for tag in list(form.add_tags.data):
-            review.add_tag(Tag.query.filter_by(name=tag).first())
+            tags.append(Tag.query.filter_by(name=tag).first())
+        review = Review(nose=form.nose.data, palate=form.palate.data, finish=form.finish.data,
+                        score=form.score.data, author=current_user, whisky=wsk, tags=tags)
+        review.distillery_ = wsk.distillery.name
+        review.whisky_ = wsk.name
+        review.user_ = current_user.username
+        review.tags_ = list(form.add_tags.data)
+        db.session.add(review)
         db.session.commit()
         flash('Your review has been submitted')
         return redirect(url_for('main.whisky', id=wsk.id))
@@ -130,6 +141,10 @@ def edit_review(rev_id):
         rev.palate = form.palate.data
         rev.finish = form.finish.data
         rev.score = form.score.data
+        rev.distillery_ = wsk.distillery.name
+        rev.whisky_ = wsk.name
+        rev.user_ = current_user.username
+        rev.tags_ = list(form.add_tags.data)
         for tag in list(form.add_tags.data):
             rev.add_tag(Tag.query.filter_by(name=tag).first())
         db.session.commit()
@@ -246,44 +261,73 @@ def edit_distillery(id):
     return render_template('edit_form.html', title='Edit distillery', form=form, distillery=dist)
 
 
-"""Routes for other views or functions"""
-
-
-@bp.route('/recipes')
-@login_required
-def recipe_page():
-    return render_template('recipe_page.html')
-
-
-@bp.route('/language/<language>')
-def set_language(language=None):
-    session['language'] = language
-    return redirect(url_for('main.home'))
+"""Routes for search functionality"""
 
 
 @bp.route('/search')
 def search():
-    if not g.search_form.validate():
-        return redirect(url_for('main.explore'))
-    page = request.args.get('page', 1, type=int)
-    tags_queried, excluded_queries, normal_queries = [], [], []
-    query = g.search_form.data['q'].split()
-    for word in query:
-        if word[0] == '@':
-            tags_queried.append(word[1:].title())
-        elif word[0] == '-':
-            excluded_queries.append(word[1:])
-        else:
-            normal_queries.append(word)
-    excluded_queries, normal_queries = ' '.join(excluded_queries), ' '.join(normal_queries)
+    if g.search_form.validate():  # Simple search
+        page = request.args.get('page', 1, type=int)
+        sort = request.args.get('sort', 'rel')
+        tags_queried, excluded_queries, normal_queries = [], [], []
+        query = g.search_form.q.data.split()
+        for word in query:
+            if word[0] == '@':
+                tags_queried.append(word[1:].title())
+            elif word[0] == '-':
+                excluded_queries.append(word[1:])
+            else:
+                normal_queries.append(word)
+        excluded_queries, normal_queries = ' '.join(excluded_queries), ' '.join(normal_queries)
+        posts, num_revs = Review.search(
+            func=query_index, query=normal_queries, excluded=excluded_queries, tags=tags_queried,
+            offset=page, size=current_app.config['POSTS_PER_PAGE'], sort=sort)
 
-    posts, num_revs = Review.search(normal_queries, excluded_queries, page, current_app.config['POSTS_PER_PAGE'])
-    if tags_queried:
-        if num_revs > 0:
-            posts = posts.join(Review.tags, aliased=True).filter(Tag.name.in_(tags_queried))
-        else:
-            posts = Review.query.join(Review.tags, aliased=True).filter(Tag.name.in_(tags_queried))
-    next_url = url_for('search', q=g.search_form.q.data['q'], page=page + 1) \
-        if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
-    prev_url = url_for('search', q=g.search_form.q.data['q'], page=page - 1) if page > 1 else None
-    return render_template('search.html', title='Search', reviews=posts, next_url=next_url, prev_url=prev_url)
+        # Sorting search results
+        rel_url = url_for('main.search', q=g.search_form.q.data, sort='rel') if sort != 'rel' else None
+        old_url = url_for('main.search', q=g.search_form.q.data, sort='old') if sort != 'old' else None
+        new_url = url_for('main.search', q=g.search_form.q.data, sort='new') if sort != 'new' else None
+
+        next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1, sort=sort) \
+            if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
+        prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1, sort=sort) if page > 1 else None
+
+    else:  # Advanced Search
+        page = request.args.get('page', 1, type=int)
+        sort = request.args.get('sort', 'rel')
+        rev = request.args.get('rev')
+        tags = request.args.getlist('tags')
+        wsk = request.args.get('wsk')
+        scr_l = request.args.get('scr_l', type=int)
+        scr_g = request.args.get('scr_g', type=int)
+        usr = request.args.get('usr')
+
+        posts, num_revs = Review.search(
+            func=query_advanced, review=rev, tags=tags, whisky=wsk, score_lower=scr_l, score_greater=scr_g,
+            user=usr, offset=page, size=current_app.config['POSTS_PER_PAGE'], sort=sort)
+
+        # Sorting search results
+        rel_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
+                          sort='rel') if sort != 'rel' else None
+        old_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
+                          sort='old') if sort != 'old' else None
+        new_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
+                          sort='new') if sort != 'new' else None
+
+        next_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
+                           page=page + 1, sort=sort) if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
+        prev_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
+                           page=page - 1, sort=sort) if page > 1 else None
+
+    return render_template('search/search.html', title='Search', reviews=posts, next_url=next_url, prev_url=prev_url,
+                           rel_url=rel_url, old_url=old_url, new_url=new_url)
+
+
+@bp.route('/adv_search', methods=['GET', 'POST'])
+def adv_search():
+    form = AdvancedSearchForm()
+    t = [[x[0] for x in all_tags[i*4:(i*4)+4]] for i in range(len(all_tags) // 4 + 1)]
+    if form.validate_on_submit():
+        return redirect(url_for('main.search', rev=form.review.data, tags=form.add_tags.data, wsk=form.whisky.data,
+                                scr_l=form.score_lt.data, scr_g=form.score_gt.data, usr=form.user.data))
+    return render_template('search/adv_search.html', title='Advanced Search', form=form, all_tags=t)

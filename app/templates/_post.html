@@ -21,7 +21,7 @@
             <a href="#">[deleted]</a>
             {% endif %}
             - {{ moment(review.timestamp).format('LLL') }}
-            {% if title == "Explore" %}
+            {% if title == "Explore" or title == "Search" %}
             -
             <a href="{{ url_for('main.whisky', id=review.whisky_id) }}">{{ review.whisky.distillery.name }} {{ review.whisky.name }}</a>
             {% endif %}

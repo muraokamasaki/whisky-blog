@@ -1,4 +1,5 @@
 import unittest
+
 from app import create_app, db
 from app.models import User, Review, Tag, Whisky, Distillery
 from config import Config
@@ -7,6 +8,7 @@ from config import Config
 class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    ELASTICSEARCH_URL = None
 
 
 class UserModelCase(unittest.TestCase):
@@ -77,8 +79,10 @@ class UserModelCase(unittest.TestCase):
         # Test adding whiskies to user
         self.assertEqual(user.get_whiskies_listed(), [])
         user.add_whisky(whisky1)
+        db.session.commit()
         self.assertTrue(user.has_whisky(whisky1))
         user.remove_whisky(whisky1)
+        db.session.commit()
         self.assertFalse(user.has_whisky(whisky1))
 
 

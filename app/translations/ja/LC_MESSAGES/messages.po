@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-04-26 14:26+0900\n"
+"POT-Creation-Date: 2019-08-22 15:07+0900\n"
 "PO-Revision-Date: 2019-04-25 23:13+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "[Whisky Blog] Password Reset"
 msgstr ""
 
-#: app/auth/forms.py:10 app/auth/forms.py:17 app/main/forms.py:12
+#: app/auth/forms.py:10 app/auth/forms.py:17 app/main/forms.py:13
 msgid "Username"
 msgstr "ユーザー名"
 
@@ -51,7 +51,7 @@ msgstr ""
 msgid "Register"
 msgstr "アカウント作成"
 
-#: app/auth/forms.py:26 app/main/forms.py:24
+#: app/auth/forms.py:26 app/main/forms.py:25
 msgid "Please use a different username"
 msgstr ""
 
@@ -84,103 +84,124 @@ msgstr ""
 msgid "You have changed your password"
 msgstr ""
 
-#: app/main/forms.py:13
+#: app/main/forms.py:14
 msgid "About Me"
 msgstr "プロフィール"
 
-#: app/main/forms.py:14 app/main/forms.py:35
+#: app/main/forms.py:15 app/main/forms.py:36 app/main/forms.py:123
 msgid "Submit"
 msgstr ""
 
-#: app/main/forms.py:28
+#: app/main/forms.py:29
 msgid "Nose"
 msgstr "香り"
 
-#: app/main/forms.py:29
+#: app/main/forms.py:30
 msgid "Palate"
 msgstr "味わい"
 
-#: app/main/forms.py:30
+#: app/main/forms.py:31
 msgid "Finish"
 msgstr "余韻"
 
-#: app/main/forms.py:31
+#: app/main/forms.py:32
 msgid "Score (out of 100)"
 msgstr ""
 
-#: app/main/forms.py:32
+#: app/main/forms.py:33 app/main/forms.py:116 app/main/forms.py:118
 msgid "Please give a score from 0 to 100"
 msgstr ""
 
-#: app/main/forms.py:33 app/templates/submit_review.html:22
+#: app/main/forms.py:34 app/main/forms.py:119
+#: app/templates/search/adv_search.html:23 app/templates/submit_review.html:22
 msgid "Tags"
 msgstr "タグ"
 
-#: app/main/forms.py:39 app/main/forms.py:67
+#: app/main/forms.py:40 app/main/forms.py:68
 msgid "Distillery"
 msgstr "蒸溜所"
 
-#: app/main/forms.py:40 app/main/forms.py:68 app/templates/distillery.html:18
+#: app/main/forms.py:41 app/main/forms.py:69 app/templates/distillery.html:18
 msgid "Region"
 msgstr "産地"
 
-#: app/main/forms.py:41 app/main/forms.py:69 app/templates/distillery.html:22
+#: app/main/forms.py:42 app/main/forms.py:70 app/templates/distillery.html:22
 msgid "Owner"
-msgstr ""
+msgstr "所有者"
 
-#: app/main/forms.py:42 app/main/forms.py:70
+#: app/main/forms.py:43 app/main/forms.py:71
 msgid "Year Founded"
-msgstr ""
+msgstr "創設"
 
-#: app/main/forms.py:43 app/templates/add_distillery.html:5
+#: app/main/forms.py:44 app/templates/add_distillery.html:5
 msgid "Add a distillery"
 msgstr ""
 
-#: app/main/forms.py:48
+#: app/main/forms.py:49
 msgid "Distillery has already been added"
 msgstr ""
 
-#: app/main/forms.py:52 app/main/forms.py:85
+#: app/main/forms.py:53 app/main/forms.py:86
 msgid "Name / Age statement"
 msgstr ""
 
-#: app/main/forms.py:53 app/main/forms.py:86
+#: app/main/forms.py:54 app/main/forms.py:87
 msgid "About Whisky (optional)"
 msgstr ""
 
-#: app/main/forms.py:54
+#: app/main/forms.py:55
 msgid "Add a whisky"
 msgstr ""
 
-#: app/main/forms.py:63
+#: app/main/forms.py:64
 msgid "Whisky has already been added"
 msgstr ""
 
-#: app/main/forms.py:71
+#: app/main/forms.py:72
 msgid "Edit distillery info"
 msgstr ""
 
-#: app/main/forms.py:81
+#: app/main/forms.py:82
 msgid "There is already a distillery with that name"
 msgstr ""
 
-#: app/main/forms.py:87
+#: app/main/forms.py:88
 msgid "Edit whisky info"
 msgstr ""
 
-#: app/main/forms.py:98
+#: app/main/forms.py:99
 msgid "There is already a whisky with that name"
 msgstr ""
 
-#: app/main/routes.py:169
+#: app/main/forms.py:114
+msgid "Nose / Palate / Finish"
+msgstr "香り・味わい・余韻"
+
+#: app/main/forms.py:115
+msgid "Score Lower Bound"
+msgstr ""
+
+#: app/main/forms.py:117
+msgid "Score Upper Bound"
+msgstr ""
+
+#: app/main/forms.py:120
+msgid "Distillery / Whisky name"
+msgstr ""
+
+#: app/main/forms.py:121
+msgid "Author Username"
+msgstr ""
+
+#: app/main/routes.py:185
 msgid "There is 1 review."
 msgstr ""
 
-#: app/main/routes.py:171
+#: app/main/routes.py:187
 msgid "There are no reviews."
 msgstr ""
 
-#: app/main/routes.py:173
+#: app/main/routes.py:189
 #, python-format
 msgid "There are %(num)s reviews."
 msgstr ""
@@ -213,10 +234,6 @@ msgstr ""
 msgid "All Whiskies"
 msgstr "ウィスキー"
 
-#: app/templates/base.html:39
-msgid "Recipes"
-msgstr ""
-
 #: app/templates/base.html:52
 msgid "Login"
 msgstr "ログイン"
@@ -235,7 +252,7 @@ msgstr ""
 
 #: app/templates/distillery.html:26
 msgid "Founded"
-msgstr ""
+msgstr "創設"
 
 #: app/templates/distillery.html:33
 msgid "Edit Distillery Info"
@@ -261,11 +278,13 @@ msgstr ""
 msgid "All recent reviews"
 msgstr ""
 
-#: app/templates/explore.html:16 app/templates/whisky.html:30
+#: app/templates/explore.html:16 app/templates/search/search.html:68
+#: app/templates/whisky.html:30
 msgid "Newer"
 msgstr "前"
 
-#: app/templates/explore.html:21 app/templates/whisky.html:35
+#: app/templates/explore.html:27 app/templates/search/search.html:79
+#: app/templates/whisky.html:41
 msgid "Older"
 msgstr "次"
 
@@ -275,10 +294,6 @@ msgstr "村岡正樹"
 
 #: app/templates/home.html:12
 msgid "Change this please"
-msgstr ""
-
-#: app/templates/recipe_page.html:4
-msgid "Scotch Cocktails"
 msgstr ""
 
 #: app/templates/user.html:15
@@ -349,4 +364,46 @@ msgstr ""
 #: app/templates/errors/500.html:5
 msgid "The administrator has been notified. Sorry for the inconvenience."
 msgstr ""
+
+#: app/templates/search/search.html:6
+msgid "Search Results"
+msgstr ""
+
+#: app/templates/search/search.html:10
+msgid "Search Help"
+msgstr ""
+
+#: app/templates/search/search.html:13
+msgid "Advanced Search"
+msgstr ""
+
+#: app/templates/search/search.html:17
+msgid "Sort By"
+msgstr ""
+
+#: app/templates/search/search.html:20
+msgid "Relevance"
+msgstr ""
+
+#: app/templates/search/search.html:21
+msgid "Old"
+msgstr ""
+
+#: app/templates/search/search.html:22
+msgid "New"
+msgstr ""
+
+#: app/templates/search/search.html:29
+msgid "Searching"
+msgstr ""
+
+#: app/templates/search/search.html:40 app/templates/search/search.html:46
+msgid "Example"
+msgstr ""
+
+#~ msgid "Recipes"
+#~ msgstr ""
+
+#~ msgid "Scotch Cocktails"
+#~ msgstr ""
 
