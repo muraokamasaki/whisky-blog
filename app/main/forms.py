@@ -111,13 +111,13 @@ class SearchForm(FlaskForm):
 
 
 class AdvancedSearchForm(FlaskForm):
-    review = StringField(_l('Nose / Palate / Finish'))
+    review = StringField(_l('Nose / Palate / Finish'), validators=[optional()])
     score_lt = IntegerField(_l('Score Lower Bound'), validators=[
         NumberRange(min=0, max=100, message=_l('Please give a score from 0 to 100')), optional()])
     score_gt = IntegerField(_l('Score Upper Bound'), validators=[
         NumberRange(min=0, max=100, message=_l('Please give a score from 0 to 100')), optional()])
     add_tags = SelectMultipleField(_l('Tags'), choices=all_tags)
-    whisky = StringField(_l('Distillery / Whisky name'))
-    user = StringField(_l('Author Username'))
+    whisky = StringField(_l('Distillery / Whisky name'), validators=[optional()])
+    user = StringField(_l('Author Username'), validators=[optional()])
     checked_tags = {}
     submit = SubmitField(_l('Submit'))

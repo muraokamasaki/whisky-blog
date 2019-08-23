@@ -266,11 +266,15 @@ def edit_distillery(id):
 
 @bp.route('/search')
 def search():
+    query_args = {}  # Query search arguments
+
     if g.search_form.validate():  # Simple search
         page = request.args.get('page', 1, type=int)
         sort = request.args.get('sort', 'rel')
+        query_args['q'] = g.search_form.q.data
+
+        query = query_args['q'].split()
         tags_queried, excluded_queries, normal_queries = [], [], []
-        query = g.search_form.q.data.split()
         for word in query:
             if word[0] == '@':
                 tags_queried.append(word[1:].title())
@@ -283,41 +287,30 @@ def search():
             func=query_index, query=normal_queries, excluded=excluded_queries, tags=tags_queried,
             offset=page, size=current_app.config['POSTS_PER_PAGE'], sort=sort)
 
-        # Sorting search results
-        rel_url = url_for('main.search', q=g.search_form.q.data, sort='rel') if sort != 'rel' else None
-        old_url = url_for('main.search', q=g.search_form.q.data, sort='old') if sort != 'old' else None
-        new_url = url_for('main.search', q=g.search_form.q.data, sort='new') if sort != 'new' else None
-
-        next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1, sort=sort) \
-            if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
-        prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1, sort=sort) if page > 1 else None
-
     else:  # Advanced Search
         page = request.args.get('page', 1, type=int)
         sort = request.args.get('sort', 'rel')
-        rev = request.args.get('rev')
-        tags = request.args.getlist('tags')
-        wsk = request.args.get('wsk')
-        scr_l = request.args.get('scr_l', type=int)
-        scr_g = request.args.get('scr_g', type=int)
-        usr = request.args.get('usr')
+        query_args.update({
+            'review': request.args.get('review'),
+            'tags': request.args.getlist('tags'),
+            'whisky': request.args.get('whisky'),
+            'score_lower': request.args.get('score_lower', type=int),
+            'score_greater': request.args.get('score_greater', type=int),
+            'user': request.args.get('user')
+        })
 
         posts, num_revs = Review.search(
-            func=query_advanced, review=rev, tags=tags, whisky=wsk, score_lower=scr_l, score_greater=scr_g,
-            user=usr, offset=page, size=current_app.config['POSTS_PER_PAGE'], sort=sort)
+            func=query_advanced, **query_args, offset=page, size=current_app.config['POSTS_PER_PAGE'], sort=sort)
 
-        # Sorting search results
-        rel_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
-                          sort='rel') if sort != 'rel' else None
-        old_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
-                          sort='old') if sort != 'old' else None
-        new_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
-                          sort='new') if sort != 'new' else None
+    # Sorting links
+    rel_url = url_for('main.search', **query_args, sort='rel') if sort != 'rel' else None
+    old_url = url_for('main.search', **query_args, sort='old') if sort != 'old' else None
+    new_url = url_for('main.search', **query_args, sort='new') if sort != 'new' else None
 
-        next_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
-                           page=page + 1, sort=sort) if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
-        prev_url = url_for('main.search', rev=rev, tags=tags, wsk=wsk, scr_l=scr_l, scr_g=scr_g, usr=usr,
-                           page=page - 1, sort=sort) if page > 1 else None
+    # Pagination links
+    next_url = url_for('main.search', **query_args,
+                       page=page + 1, sort=sort) if num_revs > page * current_app.config['POSTS_PER_PAGE'] else None
+    prev_url = url_for('main.search', **query_args, page=page - 1, sort=sort) if page > 1 else None
 
     return render_template('search/search.html', title='Search', reviews=posts, next_url=next_url, prev_url=prev_url,
                            rel_url=rel_url, old_url=old_url, new_url=new_url)
@@ -328,6 +321,7 @@ def adv_search():
     form = AdvancedSearchForm()
     t = [[x[0] for x in all_tags[i*4:(i*4)+4]] for i in range(len(all_tags) // 4 + 1)]
     if form.validate_on_submit():
-        return redirect(url_for('main.search', rev=form.review.data, tags=form.add_tags.data, wsk=form.whisky.data,
-                                scr_l=form.score_lt.data, scr_g=form.score_gt.data, usr=form.user.data))
+        return redirect(url_for('main.search', review=form.review.data, tags=form.add_tags.data,
+                                whisky=form.whisky.data,
+                                score_lower=form.score_lt.data, score_greater=form.score_gt.data, user=form.user.data))
     return render_template('search/adv_search.html', title='Advanced Search', form=form, all_tags=t)
