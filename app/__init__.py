@@ -83,8 +83,6 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info('Whisky Blog startup')
 
-        register_tags(app)
-
     return app
 
 
@@ -98,19 +96,6 @@ def get_locale():
     if language is not None:
         return language
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
-
-
-def register_tags(app):
-    from app import db
-    from app.models import Tag
-    from app.main.info import all_tags
-
-    with app.app_context():
-        for t in all_tags:
-            if Tag.query.filter_by(name=t[0]).first() is None:
-                db.session.add(Tag(name=t[0]))
-
-        db.session.commit()
 
 
 from app import models
@@ -136,10 +121,15 @@ class ReviewView(BaseModelView):
 
 
 class TagView(BaseModelView):
-    @expose('/bulk/', methods=['GET', 'POST'])
+    @expose('/bulk/')
     def bulk_view(self):
-        # TODO add bulk add for tags
-        pass
+        from app.main.info import all_tags
+        for t in all_tags:
+            tag = self.model.query.filter_by(name=t[0]).first()
+            if not tag:
+                self.session.add(self.model(name=t[0]))
+        self.session.commit()
+        return redirect('/admin/tag')
 
 
 class SearchView(BaseView):

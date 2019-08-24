@@ -54,6 +54,7 @@ class SearchableMixin:
         session._changes = None
 
     """Refreshes an index with objects from the database"""
+    # Not possible to use for Review class currently
     @classmethod
     def reindex(cls):
         for obj in cls.query:
