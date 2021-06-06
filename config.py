@@ -17,7 +17,7 @@ class Config:
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['mrokwhisky@gmail.com']
+    ADMINS = ['']
     POSTS_PER_PAGE = 8
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     LANGUAGES = ['en', 'ja']
