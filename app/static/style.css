@@ -1,0 +1,37 @@
+h2, h3, h4, h5, h6 {
+	font-family: 'Allerta', Helvetica, Arial, sans-serif;
+	font-size: 50px;
+	line-height: 55px;
+}
+
+h1 {
+    font-family: 'Allerta', Helvetica, Arial, sans-serif;
+	font-size: 50px;
+	line-height: 55px;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
+p, div, a {
+	font-family: 'Crimson Text', Georgia, Times, serif;
+	font-size: 16px;
+	line-height: 25px;
+}
+
+body {
+    margin-top: 85px;
+    background: url("./swirl.png") repeat 0 0;
+}
+
+.table .table {
+    margin-bottom: -10px;
+}
+
+hr#post {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+button#search, a#adv_search, div#sort {
+    margin-top: 15px;
+    margin-left: 30px;
+}

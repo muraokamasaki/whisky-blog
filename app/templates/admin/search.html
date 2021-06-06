@@ -1,0 +1,13 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+    <h1>Elasticsearch</h1>
+    <p>Insert mapping <a href="/admin/search/insert">here</a></p>
+    <pre>
+        <code>
+            {{ mapping }}
+        </code>
+    </pre>
+    <p>Delete mapping <a href="/admin/search/delete">here</a></p>
+
+{% endblock %}

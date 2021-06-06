@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% import 'forms.html' as forms %}
+
+{% block app_content %}
+
+    {% if distillery %}
+    <h1>{{ _('Edit Distillery') }} {{ distillery.name }}</h1>
+    {% elif whisky %}
+    <h1>{{ _('Edit Whisky') }} {{ whisky.distillery.name }} {{ whisky.name }}</h1>
+    {% elif profile %}
+    <h1>{{ _('Edit Profile') }}</h1>
+    {% endif %}
+
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.my_form(form) }}
+        </div>
+    </div>
+{% endblock %}
