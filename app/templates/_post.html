@@ -1,0 +1,47 @@
+<tr>
+    <td width="70px">
+        {% if review.author %}
+        <a href="{{ url_for('main.user', username=review.author.username) }}">
+            <img src="{{ review.author.avatar(70) }}" />
+        </a>
+        {% else %}
+        <img src="{{ url_for('static', filename='question-mark.png') }}" width="70" height="70">
+        {% endif %}
+    </td>
+    <td width="60px;">
+        <big><span class="badge badge-success">{{ review.score }} / 100</span></big>
+    </td>
+    <td width="735px;">
+        <span class="text-left">
+            {% if review.author %}
+            <a href="{{ url_for('main.user', username=review.author.username) }}">
+                {{ review.author.username }}
+            </a>
+            {% else %}
+            <a href="#">[deleted]</a>
+            {% endif %}
+            - {{ moment(review.timestamp).format('LLL') }}
+            {% if title == "Explore" or title == "Search" %}
+            -
+            <a href="{{ url_for('main.whisky', id=review.whisky_id) }}">{{ review.whisky.distillery.name }} {{ review.whisky.name }}</a>
+            {% endif %}
+            :
+        </span>
+        <hr id="post">
+        <p><span class="text-info">Nose</span><br>{{ review.nose }}</p>
+        <p><span class="text-info">Palate</span><br>{{ review.palate }}</p>
+        <p><span class="text-info">Finish</span><br>{{ review.finish }}</p>
+    </td>
+    <td style="width: 180px; padding-top: 20px;">
+        {% for tag in review.tags %}
+        <badge class="badge badge-pill badge-secondary">{{ tag.name }}</badge>
+        {% endfor %}
+    </td>
+    {% if review.author and review.author == current_user %}
+    <td style="padding-top: 90px; padding-bottom: 90px;">
+        <a href="{{ url_for('main.edit_review', rev_id=review.id) }}" class="btn btn-warning btn-block">Edit</a>
+        <br>
+        <a href="{{ url_for('main.delete_post', post_id=review.id) }}" class="btn btn-danger btn-block">Delete</a>
+    </td>
+    {% endif %}
+</tr>

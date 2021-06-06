@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% import 'forms.html' as forms %}
+
+{% block app_content %}
+    <h1>{{ _('Sign In') }}</h1>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.my_form(form) }}
+        </div>
+    </div>
+    <br>
+    <p>{{ _('New User?') }} <a href="{{ url_for('auth.register') }}">{{ _('Click to Register') }}</a></p>
+    <p>{{ _('Forgot Your Password?') }} <a href="{{ url_for('auth.reset_password_request') }}">{{ _('Click to Reset') }}</a></p>
+{% endblock %}

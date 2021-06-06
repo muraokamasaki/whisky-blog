@@ -1,0 +1,41 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>
+            {% if all_distillery %}
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="{{ url_for('main.distillery', id=distillery.id) }}">{{ distillery.name }}</a>
+                </li>
+                <li class="list-inline-item">
+                    <span class="badge badge-secondary">{{ distillery.location }}</span>
+                </li>
+            </ul>
+            {% else %}
+            {{ distillery.name }}
+            {% endif %}
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if distillery.has_whiskies() %}
+    {% for whisky in distillery.whiskys %}
+    <tr>
+        <td>
+            <span class="whisky_popup" id="{{ whisky.id }}">
+                <a href="{{ url_for('main.whisky', id=whisky.id) }}">{{ whisky.name }}</a>
+            </span>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td>
+            <span>{{ _('No whiskies added yet') }} -
+                <a href="{{ url_for('main.add_whisky', id=distillery.id) }}">{{ _('Add one here') }}</a>
+            </span>
+        </td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>

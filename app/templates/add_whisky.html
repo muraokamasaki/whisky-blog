@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% import 'forms.html' as forms %}
+
+{% block app_content %}
+    <h1>{{ _('Add a Whisky for') }} {{ distillery.name }}</h1>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.my_form(form) }}
+        </div>
+    </div>
+{% endblock %}

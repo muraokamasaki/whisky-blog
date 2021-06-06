@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% import 'forms.html' as forms %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <h1>{{ distillery.name }}</h1>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ _('Distillery Information') }}</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ _('Region') }}</th>
+                        <td>{{ distillery.location }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ _('Owner') }}</th>
+                        <td>{% if distillery.owner %}{{ distillery.owner }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ _('Founded') }}</th>
+                        <td>{% if distillery.founded %}{{ distillery.founded }}{% endif %}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            {% if current_user.is_authenticated %}
+            <p><a href="{{ url_for('main.edit_distillery', id=distillery.id) }}">{{ _('Edit Distillery Info') }}</a></p>
+            <p><a href="{{ url_for('main.add_whisky', id=distillery.id) }}">{{ _('Add a Whisky for this distillery') }}</a></p>
+            {% endif %}
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4" style="padding-top:100px;">
+            {% include '_distillery.html' %}
+        </div>
+    </div>
+{% endblock %}
